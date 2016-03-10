@@ -1,0 +1,18 @@
+# SQLite version 3.x
+#   gem install sqlite3
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem 'sqlite3'
+#
+default: &default
+  adapter: mysql2
+  host: localhost
+  socket: /tmp/mysql.sock
+
+development:
+  <<: *default
+  database: decks_dev
+
+production:
+  <<: *default
+  database: decks_prod
