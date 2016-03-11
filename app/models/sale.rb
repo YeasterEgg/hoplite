@@ -1,8 +1,8 @@
 class Sale < ActiveRecord::Base
 
-  has_many :products, through: :sold_product
+  belongs_to :product
 
-  def sale_line
+  def sales_file
   end
 
 end

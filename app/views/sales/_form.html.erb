@@ -1,9 +1,12 @@
-<%= form_for(@sale) do |f| %>
+<%= form_tag({action: :upload_file, method: :post}, multipart: true) do |f| %>
+
   <div class="field">
-    <%= f.label :sale_line %><br>
-    <%= f.text_area :sale_line, cols: 80, rows: 10 %>
+    <%= label :sales_file, 'Seleziona il File da caricare' %>
+    <br/>
+    <%= file_field_tag :sales_file, multiple: true, accept: 'text/plain,application/excel' %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= submit_tag 'Salva' %>
   </div>
+
 <% end %>
