@@ -24,7 +24,7 @@ class SalesController < ApplicationController
   # POST /sales
   # POST /sales.json
   def create
-    @sale = Sale.new(sale_params)
+    @sale = Sale.new(lines_to_params)
 
     respond_to do |format|
       if @sale.save
@@ -68,7 +68,14 @@ class SalesController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def sale_params
-      params.require(:sale).permit(:date, :number, :quantity)
+    def get_safe_lines
+      params.require(:sale).permit(:sale_line)
+
+    end
+
+    def lines_to_params
+      regex = /(\d{2}\/\d{2}\/\d{2})\s+(\d{4,7})\s+(\d+,\d+)\s+(\d+)\s+\d+\/\d+\/(\d+)\/\d+(\/[MN].+)?/
+      match = get_safe_lines[:sale_line].match regex
+      result = {date: DateTime.strptime(match[1],'%d/%m/%y'), product_code: match[2], quantity: match[4], transaction_code: match[5]}
     end
 end

@@ -16,16 +16,18 @@ ActiveRecord::Schema.define(version: 20160310145425) do
   create_table "products", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.integer  "code",       limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.float    "decimal",    limit: 24
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sales", force: :cascade do |t|
     t.datetime "date"
-    t.integer  "number",     limit: 4
-    t.integer  "quantity",   limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "transaction_code", limit: 4
+    t.integer  "quantity",         limit: 4
+    t.integer  "product_code",     limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

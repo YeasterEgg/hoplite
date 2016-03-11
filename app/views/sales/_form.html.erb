@@ -1,27 +1,7 @@
 <%= form_for(@sale) do |f| %>
-  <% if @sale.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@sale.errors.count, "error") %> prohibited this sale from being saved:</h2>
-
-      <ul>
-      <% @sale.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="field">
-    <%= f.label :date %><br>
-    <%= f.datetime_select :date %>
-  </div>
-  <div class="field">
-    <%= f.label :number %><br>
-    <%= f.number_field :number %>
-  </div>
-  <div class="field">
-    <%= f.label :quantity %><br>
-    <%= f.number_field :quantity %>
+    <%= f.label :sale_line %><br>
+    <%= f.text_area :sale_line, cols: 80, rows: 10 %>
   </div>
   <div class="actions">
     <%= f.submit %>

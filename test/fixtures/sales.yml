@@ -1,11 +1,2 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  date: 2016-03-10 15:54:25
-  number: 1
-  quantity: 1
-
-two:
-  date: 2016-03-10 15:54:25
-  number: 1
-  quantity: 1
+w
