@@ -30,15 +30,10 @@ class ProductsController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @product.update(product_params)
-        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
-        format.json { render :show, status: :ok, location: @product }
-      else
-        format.html { render :edit }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
-    end
+    new_products = Sale.new_sales.pluck(:product_code).uniq
+    products_to_update = Product.all & new_products
+    new_products = new_products - products_to_update
+    Sale.new_sales.map(&:set_as_old)
   end
 
   def destroy
@@ -48,10 +43,6 @@ class ProductsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  def update_all
-    @products = Product.all
-    Sale.all.pluck(:product_code).uniq
 
   private
     # Use callbacks to share common setup or constraints between actions.

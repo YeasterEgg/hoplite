@@ -51,7 +51,7 @@ class SalesController < ApplicationController
 
   def upload_file
     file = params[:sales_file]
-    parse_and_save(file)
+    parse(file)
     redirect_to sales_path
   end
 
@@ -60,14 +60,19 @@ class SalesController < ApplicationController
       @sale = Sale.find(params[:id])
     end
 
-    def parse_and_save(file)
-      regex = /(\d{2}\/\d{2}\/\d{2})\s+(\d{4,7})\s+(\d+,\d+)\s+(\d+)\s+\d+\/\d+\/(\d+)\/\d+(\/[MN].+)?/
+    def parse(file)
       File.read(file.path).scrub.split("\n").each do |sale|
-        match = sale.match regex
-        if !match.nil? and match[6].nil?
-          result = {date: DateTime.strptime(match[1],'%d/%m/%y'), product_code: match[2], quantity: match[4], transaction_code: match[5]}
-          Sale.find_or_create_by(result)
-        end
+        check_and_store(sale)
       end
     end
+
+    def check_and_store(line)
+      regex = /(\d{2}\/\d{2}\/\d{2})\s+(\d{4,7})\s+(\d+,\d+)\s+(\d+)\s+\d+\/\d+\/(\d+)\/\d+(\/[MN].+)?/
+      match = line.match regex
+      if !match.nil? and match[6].nil? and match[2] != '73729'
+        result = {date: DateTime.strptime(match[1],'%d/%m/%y'), product_code: match[2], quantity: match[4], transaction_code: match[5], checked: false}
+        Sale.find_or_create_by(result)
+      end
+    end
+
 end

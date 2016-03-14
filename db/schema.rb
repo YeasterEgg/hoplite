@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20160310145425) do
     t.integer  "transaction_code", limit: 4
     t.integer  "quantity",         limit: 4
     t.integer  "product_code",     limit: 4
+    t.boolean  "checked"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
