@@ -66,7 +66,7 @@ class SalesController < ApplicationController
         match = sale.match regex
         if !match.nil? and match[6].nil?
           result = {date: DateTime.strptime(match[1],'%d/%m/%y'), product_code: match[2], quantity: match[4], transaction_code: match[5]}
-          Sale.create!(result)
+          Sale.find_or_create_by(result)
         end
       end
     end

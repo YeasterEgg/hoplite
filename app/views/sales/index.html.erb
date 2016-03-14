@@ -1,42 +1,46 @@
 <p id="notice"><%= notice %></p>
+<div class="wrap">
+  <div class="container">
+    <h1>Elenco delle transazioni</h1>
 
-<h1>Elenco delle transazioni</h1>
-
-<table class="sales_table">
-  <colgroup>
-    <col style="width: 20%;">
-    <col style="width: 20%;">
-    <col style="width: 20%;">
-    <col style="width: 20%;">
-    <col style="width: 20%;">
-  </colgroup>
-  <thead>
-    <tr>
-      <th>Data</th>
-      <th>Codice Prodotto</th>
-      <th>Quantità</th>
-      <th>Numero Transazione</th>
-      <th>Azioni</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @sales.each do |sale| %>
-      <% if sale.id == @lucky_one %>
-        <tr class='comic'>
-      <% else %>
+    <table class="sales_table">
+      <colgroup>
+        <col style="width: 20%;">
+        <col style="width: 20%;">
+        <col style="width: 20%;">
+        <col style="width: 20%;">
+        <col style="width: 20%;">
+      </colgroup>
+      <thead>
         <tr>
-      <% end %>
-        <td><%= sale.date.strftime('%d/%m/%y') %></td>
-        <td><%= sale.product_code %></td>
-        <td><%= sale.quantity %></td>
-        <td><%= sale.transaction_code %></td>
-        <td><%= link_to 'Elimina', sale, method: :delete, data: { confirm: 'Sei sicur*?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+          <th>Data</th>
+          <th>Codice Prodotto</th>
+          <th>Quantità</th>
+          <th>Numero Transazione</th>
+          <th>Azioni</th>
+        </tr>
+      </thead>
 
-<br>
+      <tbody>
+        <% @sales.each do |sale| %>
+          <% if sale.id == @lucky_one %>
+            <tr class='comic'>
+          <% else %>
+            <tr>
+          <% end %>
+            <td><%= sale.date.strftime('%d/%m/%y') %></td>
+            <td><%= sale.product_code %></td>
+            <td><%= sale.quantity %></td>
+            <td><%= sale.transaction_code %></td>
+            <td><%= link_to 'Elimina', sale, method: :delete, data: { confirm: 'Sei sicur*?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-<%= link_to 'Carica un nuovo elenco', new_sale_path %>
+    <br>
+  </div>
+</div>
+<div class="new">
+  <%= link_to 'Carica un nuovo elenco', new_sale_path %>
+</div>
