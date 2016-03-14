@@ -3,6 +3,7 @@ class SalesController < ApplicationController
 
   def index
     @sales = Sale.all
+    @lucky_one = @sales.pluck(:id).sample
   end
 
   def show
@@ -50,7 +51,7 @@ class SalesController < ApplicationController
 
   def upload_file
     file = params[:sales_file]
-    sort_through(file)
+    parse_and_save(file)
     redirect_to sales_path
   end
 
@@ -59,11 +60,11 @@ class SalesController < ApplicationController
       @sale = Sale.find(params[:id])
     end
 
-    def sort_through(file)
+    def parse_and_save(file)
       regex = /(\d{2}\/\d{2}\/\d{2})\s+(\d{4,7})\s+(\d+,\d+)\s+(\d+)\s+\d+\/\d+\/(\d+)\/\d+(\/[MN].+)?/
       File.read(file.path).scrub.split("\n").each do |sale|
         match = sale.match regex
-        unless match.nil?
+        if !match.nil? and match[6].nil?
           result = {date: DateTime.strptime(match[1],'%d/%m/%y'), product_code: match[2], quantity: match[4], transaction_code: match[5]}
           Sale.create!(result)
         end
