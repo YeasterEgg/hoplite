@@ -51,6 +51,7 @@ class SalesController < ApplicationController
   def upload_file
     file = params[:sales_file]
     sort_through(file)
+    redirect_to sales_path
   end
 
   private
@@ -60,10 +61,12 @@ class SalesController < ApplicationController
 
     def sort_through(file)
       regex = /(\d{2}\/\d{2}\/\d{2})\s+(\d{4,7})\s+(\d+,\d+)\s+(\d+)\s+\d+\/\d+\/(\d+)\/\d+(\/[MN].+)?/
-      File.foreach(file) do |sale|
+      File.read(file.path).scrub.split("\n").each do |sale|
         match = sale.match regex
-        result = {date: DateTime.strptime(match[1],'%d/%m/%y'), product_code: match[2], quantity: match[4], transaction_code: match[5]}
-        Sale.new(result)
+        unless match.nil?
+          result = {date: DateTime.strptime(match[1],'%d/%m/%y'), product_code: match[2], quantity: match[4], transaction_code: match[5]}
+          Sale.create!(result)
+        end
       end
     end
 end
