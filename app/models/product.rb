@@ -12,7 +12,7 @@ class Product < ActiveRecord::Base
 
   def husband_product
     ## Best product for a panoplie, maybe?
-    best_pair[0]
+    best_pair[0] || {product: 'Nessuno', sales: ''}
   end
 
   def total_sales
