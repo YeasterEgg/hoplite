@@ -3,6 +3,7 @@ class ProductsController < ApplicationController
 
   def index
     @products = Product.all
+    @lucky_one = @products.pluck(:id).sample
   end
 
   def show

@@ -3,36 +3,34 @@
   <div class="container">
     <h1>Elenco dei Prodotti</h1>
 
-    <table class="sales_table">
+    <table class="product_table">
       <colgroup>
-        <col style="width: 20%;">
-        <col style="width: 20%;">
-        <col style="width: 20%;">
-        <col style="width: 20%;">
-        <col style="width: 20%;">
+        <col style="width: 25%;">
+        <col style="width: 25%;">
+        <col style="width: 25%;">
+        <col style="width: 25%;">
       </colgroup>
       <thead>
         <tr>
           <th>Codice Prodotto</th>
           <th>Prezzo</th>
-          <th>Quantità vendute al mese</th>
-          <th>Numero Transazione</th>
-          <th>Azioni</th>
+          <th>Quantità vendute</th>
+          <th>Miglior Panoplie</th>
         </tr>
       </thead>
 
       <tbody>
-        <% @sales.each do |sale| %>
-          <% if sale.id == @lucky_one %>
-            <tr class='comic'>
-          <% else %>
-            <tr>
-          <% end %>
-            <td><%= sale.date.strftime('%d/%m/%y') %></td>
-            <td><%= sale.product_code %></td>
-            <td><%= sale.quantity %></td>
-            <td><%= sale.transaction_code %></td>
-            <td><%= link_to 'Elimina', sale, method: :delete, data: { confirm: 'Sei sicur*?' } %></td>
+        <% @products.each do |product| %>
+          <tr
+            <% if product.id == @lucky_one %>
+              class='comic'>
+            <% else %>
+              >
+            <% end %>
+            <td><%= product.code %></td>
+            <td><%= product.price.round(2) %></td>
+            <td><%= product.total_sales %></td>
+            <td><%= product.husband_product %></td>
           </tr>
         <% end %>
       </tbody>
@@ -41,3 +39,15 @@
     <br>
   </div>
 </div>
+
+<%= form_tag({controller: :sales, action: :upload_file, method: :post}, multipart: true) do |f| %>
+  <div class="browse_button">
+    <%= label :sales_file, 'Seleziona il File da caricare' %>
+    <br/>
+    <%= file_field_tag :sales_file, multiple: true, accept: 'text/plain,application/excel' %>
+  </div>
+  <div class="save">
+    <%= submit_tag 'Salva' %>
+  </div>
+
+<% end %>

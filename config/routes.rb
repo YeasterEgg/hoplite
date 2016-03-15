@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  resources :sales
+
+  root 'products#index'
+
   post 'sales/upload_file', to: 'sales#upload_file', as: 'upload_sales_file'
-  resources :products
-  root 'sales#index'
+
+  resources :products, only: [:index, :show]
+
 end
