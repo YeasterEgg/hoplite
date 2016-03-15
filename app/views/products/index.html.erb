@@ -1,7 +1,22 @@
 <p id="notice"><%= notice %></p>
 <div class="wrap">
+
+  <div class="search_form">
+    <%= search_form_for @search do |f| %>
+
+      <%= f.label :code_cont, 'Ricerca Prodotto' %>
+      <%= f.search_field :code_cont %>
+
+      <%= f.submit 'Cerca' %>
+    <% end %>
+  </div>
+
   <div class="container">
     <h1>Elenco dei Prodotti</h1>
+
+    <div class="flickr_pagination">
+        <%= will_paginate @collection, :container => false %>
+    </div>
 
     <table class="product_table">
       <colgroup>
@@ -20,7 +35,7 @@
       </thead>
 
       <tbody>
-        <% @products.each do |product| %>
+        <% @collection.each do |product| %>
           <tr
             <% if product.id == @lucky_one %>
               class='comic'>
@@ -35,8 +50,15 @@
         <% end %>
       </tbody>
     </table>
-
     <br>
+
+    <div class="flickr_pagination">
+        <div class="page_info">
+          <%= page_entries_info @collection %>
+        </div>
+        <%= will_paginate @collection, :container => false %>
+    </div>
+
   </div>
 </div>
 

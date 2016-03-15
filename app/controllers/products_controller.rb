@@ -2,8 +2,15 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   def index
-    @products = Product.all
-    @lucky_one = @products.pluck(:id).sample
+    params[:q] ||= {}
+    params[:page] ||= 1
+    @search = Product.ransack(params[:q])
+    @collection = @search.result.page(params[:page]).per_page(20)
+    if @collection.length > 10
+      @lucky_one = @collection.pluck(:id).sample
+    else
+      @lucky_one = 'none_shall_pass'
+    end
   end
 
   def show
