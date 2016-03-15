@@ -5,6 +5,7 @@ class CreateSales < ActiveRecord::Migration
       t.integer :transaction_code
       t.integer :quantity
       t.integer :product_code
+      t.decimal :price,  precision: 5, scale: 2
       t.boolean :checked
 
       t.timestamps null: true

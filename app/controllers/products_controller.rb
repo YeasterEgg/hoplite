@@ -30,10 +30,15 @@ class ProductsController < ApplicationController
   end
 
   def update
-    new_products = Sale.new_sales.pluck(:product_code).uniq
-    products_to_update = Product.all & new_products
-    new_products = new_products - products_to_update
-    Sale.new_sales.map(&:set_as_old)
+    respond_to do |format|
+      if @product.update(product_params)
+        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
+        format.json { render :show, status: :ok, location: @product }
+      else
+        format.html { render :edit }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
@@ -45,12 +50,10 @@ class ProductsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
       params.require(:product).permit(:name, :code)
     end

@@ -14,9 +14,7 @@
 ActiveRecord::Schema.define(version: 20160310145425) do
 
   create_table "products", force: :cascade do |t|
-    t.string   "name",       limit: 255
     t.integer  "code",       limit: 4
-    t.float    "decimal",    limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -26,6 +24,7 @@ ActiveRecord::Schema.define(version: 20160310145425) do
     t.integer  "transaction_code", limit: 4
     t.integer  "quantity",         limit: 4
     t.integer  "product_code",     limit: 4
+    t.decimal  "price",                      precision: 5, scale: 2
     t.boolean  "checked"
     t.datetime "created_at"
     t.datetime "updated_at"
