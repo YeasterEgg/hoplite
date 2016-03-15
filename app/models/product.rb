@@ -24,10 +24,23 @@ class Product < ActiveRecord::Base
     ## That's not so simple
     product_sales_transation_codes = Sale.where(product_code: self.code).pluck(:transaction_code)
     ## Every transaction which contains self
-    product_sales_panoplie_codes = Sale.where(transaction_code: product_sales_transation_codes).pluck(:product_code)
-    ## Every product that has been sold with self
-    product_sales_panoplie_codes.group_by(&:itself).values.sort_by(&:size).map(&:uniq).reverse[0...pairs_number].map(&:first) - [self.code]
-    ## First groups products to create arrays of number of appearance, then sorts for size and uniq,
-    ## then returns an array of codes subtracting the product itself for obvious reasons
+    product_sales_panoplie_codes = Sale.where(transaction_code: product_sales_transation_codes)
+                                       .where.not(product_code: self.code)
+                                       .pluck(:product_code)
+    ## Every sale that contains self but those about self
+    sort_and_count(product_sales_panoplie_codes)
   end
+
+  private
+
+    def sort_and_count(bi_array)
+      ## IF AND WHEN I SORT IT OUT, FIX THE SORT AND REVERSE
+      bi_array.group_by(&:itself)
+              .values
+              .sort_by(&:size)
+              .reverse
+              .map{|array| array = {product: array.uniq.first, sales: array.length}}
+      ## Groups products to create arrays of number of appearance, then sorts for size and create
+      ## for each product a hash with product = product.code and sales = times of sales together
+    end
 end

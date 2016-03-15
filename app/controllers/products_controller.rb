@@ -7,6 +7,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @best_pairs = @product.best_pair
   end
 
   def new

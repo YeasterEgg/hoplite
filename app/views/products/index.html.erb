@@ -27,10 +27,10 @@
             <% else %>
               >
             <% end %>
-            <td><%= product.code %></td>
+            <td><%= link_to product.code, product_path(product) %></td>
             <td><%= product.price.round(2) %></td>
             <td><%= product.total_sales %></td>
-            <td><%= product.husband_product %></td>
+            <td><%= "#{product.husband_product[:product]} (#{product.husband_product[:sales]} volte)" %></td>
           </tr>
         <% end %>
       </tbody>

@@ -1,14 +1,35 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
-  <%= @product.name %>
-</p>
-
-<p>
-  <strong>Code:</strong>
+  <strong>Codice:</strong>
   <%= @product.code %>
 </p>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
+<p>
+  <strong>Prezzo:</strong>
+  <%= @product.price.round(2) %>
+</p>
+
+<table class="product_table">
+  <colgroup>
+    <col style="width: 50%;">
+    <col style="width: 50%;">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Codice Prodotto</th>
+      <th>Numero Evenienze</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @best_pairs.each do |pair| %>
+      <tr>
+        <td><%= pair[:product] %></td>
+        <td><%= pair[:sales] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
 <%= link_to 'Back', products_path %>
