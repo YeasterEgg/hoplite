@@ -45,7 +45,7 @@ class SalesController < ApplicationController
       if Product.find_by_code(match[2]).nil?
         Product.create({code: match[2], total_sales: 1})
       else
-        Product.find_by_code(match[2]).increase!(:total_sales, match[4])
+        Product.find_by_code(match[2]).increment!(:total_sales, match[4].to_i)
       end
     end
 end
