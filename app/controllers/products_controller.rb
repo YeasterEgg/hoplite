@@ -5,11 +5,11 @@ class ProductsController < ApplicationController
     params[:q] ||= {}
     params[:page] ||= 1
     @search = Product.ransack(params[:q])
-    @collection = @search.result.page(params[:page]).per_page(20)
+    @collection = @search.result.order("total_sales DESC").page(params[:page]).per_page(20)
     if @collection.length > 10
       @lucky_one = @collection.pluck(:id).sample
     else
-      @lucky_one = 'none_shall_pass'
+      @lucky_one = '2eazy'
     end
   end
 

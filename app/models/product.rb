@@ -15,11 +15,6 @@ class Product < ActiveRecord::Base
     best_pair[0] || {product: 'Nessuno', sales: ''}
   end
 
-  def total_sales
-    ## Total number of sold Products
-    Sale.where(product_code: self.code).pluck(:quantity).sum
-  end
-
   def best_pair(pairs_number = 10)
     ## That's not so simple
     product_sales_transation_codes = Sale.where(product_code: self.code).pluck(:transaction_code)

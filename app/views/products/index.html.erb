@@ -29,7 +29,7 @@
         <tr>
           <th>Codice Prodotto</th>
           <th>Prezzo</th>
-          <th>Quantità vendute</th>
+          <% sort_link(@search, :total_sales, 'Quantità Vendute', default_order: :desc) %>
           <th>Miglior Panoplie</th>
         </tr>
       </thead>
