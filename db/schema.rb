@@ -13,20 +13,23 @@
 
 ActiveRecord::Schema.define(version: 20160310145425) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "products", force: :cascade do |t|
-    t.integer  "code",        limit: 4
-    t.integer  "total_sales", limit: 4
-    t.string   "name",        limit: 255
+    t.integer  "code"
+    t.integer  "total_sales"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "sales", force: :cascade do |t|
     t.datetime "date"
-    t.integer  "transaction_code", limit: 4
-    t.integer  "quantity",         limit: 4
-    t.integer  "product_code",     limit: 4
-    t.decimal  "price",                      precision: 5, scale: 2
+    t.integer  "transaction_code"
+    t.integer  "quantity"
+    t.integer  "product_code"
+    t.decimal  "price",            precision: 5, scale: 2
     t.boolean  "checked"
     t.datetime "created_at"
     t.datetime "updated_at"

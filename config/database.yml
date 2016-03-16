@@ -5,14 +5,18 @@
 #   gem 'sqlite3'
 #
 default: &default
-  adapter: mysql2
-  host: localhost
-  socket: /tmp/mysql.sock
+  adapter: postgresql
+  encoding: UTF-8
+  pool: 5
 
 development:
   <<: *default
   database: decks_dev
+  username: luca.mattiazzi
 
 production:
   <<: *default
-  database: decks_prod
+  host: ec2-54-228-246-206.eu-west-1.compute.amazonaws.com
+  database: d7oljimmo333ld
+  username: nfincxmbghonhj
+  password: 12rf9DnDQtmIuxirM4BZWuSUx
