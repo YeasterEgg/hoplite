@@ -13,7 +13,7 @@ gem 'mysql2'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'will_paginate'
 
-group :development, :test do
+group :development, :test, :production do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'better_errors'
