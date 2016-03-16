@@ -32,7 +32,7 @@ class SalesController < ApplicationController
       end
     end
 
-    def create_sale_and_product(match)
+    def create_sale_and_product(match, skip_name = false)
       result = {
                 date: DateTime.strptime(match[1],'%d/%m/%y'),
                 product_code: match[2],
@@ -43,7 +43,8 @@ class SalesController < ApplicationController
               }
       Sale.find_or_create_by(result)
       if Product.find_by_code(match[2]).nil?
-        Product.create({code: match[2], total_sales: 1})
+        new_product = Product.create({code: match[2], total_sales: 1})
+        skip_name ? new_product.update_attribute(:name, 'NessunNome') : new_product.update_attribute(:name, new_product.find_out_name)
       else
         Product.find_by_code(match[2]).increment!(:total_sales, match[4].to_i)
       end

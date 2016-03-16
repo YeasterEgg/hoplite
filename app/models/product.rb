@@ -26,7 +26,21 @@ class Product < ActiveRecord::Base
     sort_and_count(product_sales_panoplie_codes)
   end
 
+  def find_out_name
+    ## It works only with live products, also it's really unstable + product names SUCKS.
+    ## That said, it's quick&dirty, but better than nothing
+    product_url = URI("http://www.decathlon.it/Comprare/#{self.code}")
+    response_to_url = Net::HTTP.get_response(product_url)
+    response_to_url['location'].nil? ? 'ProdottoInattivo' : parse_product_title(response_to_url['location'])
+  end
+
   private
+
+    def parse_product_title(title)
+      title.split('-id_')[0].split('/')[-1].gsub('-',' ').capitalize
+      ## I know, it's bad. There surely are better solutions, but I'm quite curious to test it, I will
+      ## refactor later (as in never)
+    end
 
     def sort_and_count(bi_array)
       ## IF AND WHEN I SORT IT OUT, FIX THE SORT AND REVERSE

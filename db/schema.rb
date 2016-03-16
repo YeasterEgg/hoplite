@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20160310145425) do
   create_table "products", force: :cascade do |t|
     t.integer  "code",        limit: 4
     t.integer  "total_sales", limit: 4
+    t.string   "name",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end

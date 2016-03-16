@@ -20,7 +20,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 it:
+  from: da
+  to: a
   hello: "Hello world"
+  product: Prodotti
   will_paginate:
     previous_label: "&#8592; Precedente"
     next_label: "Prossima &#8594;"
@@ -32,10 +35,10 @@ it:
         other: "Mostra %{count} %{model}"
       single_page_html:
         zero:  "No %{model} found"
-        one:   "Displaying <b>1</b> %{model}"
-        other: "Displaying <b>all&nbsp;%{count}</b> %{model}"
+        one:   "Mostra <b>1</b> %{model}"
+        other: "Mostra <b>all&nbsp;%{count}</b> %{model}"
 
-      multi_page: "Displaying %{model} %{from} - %{to} of %{count} in total"
-      multi_page_html: "Displaying %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> of <b>%{count}</b> in total"
+      multi_page: "Mostra i %{model.humanize_ita} %{from} - %{to} su %{count} in totale"
+      multi_page_html: "Mostra i prodotti <b>%{from}&nbsp;-&nbsp;%{to}</b> su <b>%{count}</b> in totale"
 
 
