@@ -12,11 +12,11 @@ default: &default
 development:
   <<: *default
   database: decks_dev
-  username: luca.mattiazzi
+  username: luca
 
 production:
   <<: *default
   host: ec2-54-228-246-206.eu-west-1.compute.amazonaws.com
-  database: d7oljimmo333ld
+  database: hoplite-database
   username: nfincxmbghonhj
   password: 12rf9DnDQtmIuxirM4BZWuSUx
