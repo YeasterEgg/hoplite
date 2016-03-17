@@ -33,12 +33,19 @@ class SalesController < ApplicationController
     end
 
     def create_sale_and_product(match, skip_name = true)
+      ## Creates a sale for each line of the file. Every sale group to a transaction, which can be
+      ## identified via its date and transaction_code values. In order to combine them in a single
+      ## parameter that is both univoque and decombined in its original values, i turn transaction_code
+      ## into seconds and add them to date. Hoping that transaction_code never grows higher than
+      ## 86400. Then maybe something like GMT or ms might come in handy.
+      ## This also allows me to remove transaction_code as a column in database, since datetime kept
+      ## track of hours, minutes and seconds even when I didn't need them.
+      ## What a spiegone, buondio.
       result = {
-                date: DateTime.strptime(match[1],'%d/%m/%y'),
+                date: DateTime.strptime(match[1],'%d/%m/%y') + match[5].seconds,
                 product_code: match[2],
                 price:  BigDecimal(match[3].gsub(',','.')),
                 quantity: match[4],
-                transaction_code: match[5],
                 checked: false,
               }
       Sale.find_or_create_by(result)
