@@ -16,7 +16,7 @@ development:
 
 production:
   <<: *default
-  host: ec2-54-228-246-206.eu-west-1.compute.amazonaws.com
+  host: ec2-54-228-246-19.eu-west-1.compute.amazonaws.com
   database: hoplite-database
-  username: nfincxmbghonhj
-  password: 12rf9DnDQtmIuxirM4BZWuSUx
+  username: diigrcezzdpahg
+  password: 17AqgQCesBDxHiwIze-sn6sJVk
