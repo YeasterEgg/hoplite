@@ -42,7 +42,7 @@ class SalesController < ApplicationController
       ## track of hours, minutes and seconds even when I didn't need them.
       ## What a spiegone, buondio.
       result = {
-                date: DateTime.strptime(match[1],'%d/%m/%y') + match[5].seconds,
+                date: DateTime.strptime(match[1],'%d/%m/%y') + match[5].to_i.seconds,
                 product_code: match[2],
                 price:  BigDecimal(match[3].gsub(',','.')),
                 quantity: match[4],

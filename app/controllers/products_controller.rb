@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @best_pairs = @product.best_pair
+    @all_pairs = @product.all_pairs
   end
 
   def new

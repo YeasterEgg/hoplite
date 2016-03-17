@@ -1,18 +1,22 @@
+<%= render partial: 'google_charts_js', locals: {product: @product, histogram: @product.best_pairs_to_chart.to_json.html_safe, pie: @product.values_for_pie_chart.to_json.html_safe} %>
+
 <p id="notice"><%= notice %></p>
 
 <h1><%= @product.name %></h1>
 
-<p>
+<p id = "product_details">
   <strong>Codice:</strong>
   <%= @product.code %>
-</p>
-
-<p>
   <strong>Prezzo:</strong>
-  <%= @product.price.round(2) %>
+  <%= number_to_currency(@product.price, unit: "€", separator: ",", delimiter: "", format: "%n %u") %>
 </p>
 
-<table class="product_table">
+<div id = "charts">
+  <div id="pie_container" style="width:50%; height:400px;"></div>
+  <div id="histogram_container" style="width:50%; height:400px;"></div>
+</div>
+
+<table class="panoplie_table">
   <colgroup>
     <col style="width: 50%;">
     <col style="width: 50%;">
@@ -20,11 +24,11 @@
   <thead>
     <tr>
       <th>Codice Prodotto</th>
-      <th>Numero Evenienze</th>
+      <th>Numero Vendite complementari</th>
     </tr>
   </thead>
   <tbody>
-    <% @best_pairs.each do |pair| %>
+    <% @all_pairs[0..20].each do |pair| %>
       <tr>
         <td><%= pair[:product] %></td>
         <td><%= pair[:sales] %></td>
