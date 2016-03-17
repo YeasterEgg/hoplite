@@ -32,7 +32,7 @@ class SalesController < ApplicationController
       end
     end
 
-    def create_sale_and_product(match, skip_name = false)
+    def create_sale_and_product(match, skip_name = true)
       result = {
                 date: DateTime.strptime(match[1],'%d/%m/%y'),
                 product_code: match[2],
