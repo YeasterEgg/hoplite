@@ -4,6 +4,7 @@ class CreateProducts < ActiveRecord::Migration
       t.integer :code
       t.integer :total_sales
       t.string :name
+      t.decimal :price
 
       t.timestamps null: true
     end

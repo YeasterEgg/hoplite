@@ -11,6 +11,20 @@
     <% end %>
   </div>
 
+  <div class="upload_form">
+  <%= form_tag({controller: :sales, action: :upload_file, method: :post}, multipart: true) do |f| %>
+    <div class="browse_button">
+      <%= label :sales_file, 'Seleziona il File da caricare' %>
+      <br/>
+      <%= file_field_tag :sales_file, multiple: true, accept: 'text/plain,application/excel' %>
+    </div>
+    <div class="save">
+      <%= submit_tag 'Salva' %>
+    </div>
+
+  <% end %>
+  </div>
+
   <div class="container">
     <h1>Elenco dei Prodotti</h1>
 
@@ -44,9 +58,9 @@
             <% else %>
               >
             <% end %>
-            <td><%= link_to product.name, product_path(product) %></td>
+            <td><%= link_to product.name || 'NoName', product_path(product) %></td>
             <td><%= product.code %></td>
-            <td><%= product.price.round(2) %></td>
+            <td><%= number_to_currency(product[:price], unit: "€", separator: ",", delimiter: "", format: "%n %u") %></td>
             <td><%= product.total_sales %></td>
             <td><%= "#{product.husband_product[:product]} (#{product.husband_product[:sales]} volte)" %></td>
           </tr>

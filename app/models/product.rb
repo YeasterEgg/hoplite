@@ -5,9 +5,9 @@ class Product < ActiveRecord::Base
   has_many :sales
 
   def price
+    ## It uses (non-weighted) average price between all of its sales
     values = Sale.where(product_code: self.code).pluck(:price)
     BigDecimal(values.sum / values.length)
-    ## It uses (non-weighted) average price between all of its sales
   end
 
   def husband_product
@@ -17,21 +17,17 @@ class Product < ActiveRecord::Base
 
   def all_pairs
     ## That's not so simple
-    product_sales_dates = Sale.where(product_code: self.code).pluck(:date)
     ## Every transaction which contains self (transactions are identified via date)
+    product_sales_dates = Sale.where(product_code: self.code).pluck(:date)
+    ## Every sale that contains self but those about self
     product_sales_panoplie_codes = Sale.where(date: product_sales_dates)
                                        .where.not(product_code: self.code)
                                        .pluck(:product_code)
-    ## Every sale that contains self but those about self
     sort_and_count(product_sales_panoplie_codes)
   end
 
-  def find_out_name
-    ## It works only with live products, also it's really unstable + product names SUCKS.
-    ## That said, it's quick&dirty, but better than nothing
-    product_url = URI("http://www.decathlon.it/Comprare/#{self.code}")
-    response_to_url = Net::HTTP.get_response(product_url)
-    response_to_url['location'].nil? ? 'ProdottoInattivo' : parse_product_title(response_to_url['location'])
+  def set_name
+    self.update_attribute(:name, find_out_name)
   end
 
   def best_pairs_to_chart(pairs_number = 20)
@@ -57,23 +53,36 @@ class Product < ActiveRecord::Base
     values_for_pie_chart << ['Solo', solo_transactions]
     values_for_pie_chart << ['In Panoplie', total_transactions - solo_transactions]
   end
+
+  def new_price_average(last_price)
+    (self[:price] * self[:total_sales] + last_price.to_f) / (self[:total_sales]+1)
+  end
+
   private
 
+    def find_out_name
+      ## It works only with live products, also it's really unstable + product names SUCKS.
+      ## That said, it's FUCKINGSLOW&dirty, still better than nothing
+      product_url = URI("http://www.decathlon.it/Comprare/#{self.code}")
+      response_to_url = Net::HTTP.get_response(product_url)
+      response_to_url['location'].nil? ? 'ProdottoInattivo' : parse_product_title(response_to_url['location'])
+    end
+
     def parse_product_title(title)
-      title.split('-id_')[0].split('/')[-1].gsub('-',' ').capitalize
       ## I know, it's bad. There surely are better solutions, but I'm quite curious to test it, I will
       ## refactor later (as in never)
+      title.split('-id_')[0].split('/')[-1].gsub('-',' ').capitalize
     end
 
     def sort_and_count(bi_array)
       ## IF AND WHEN I SORT IT OUT, FIX THE SORT AND REVERSE
+      ## Groups products to create arrays of number of appearance, then sorts for size and create
+      ## for each product a hash with product = product.code and sales = times of sales together
       bi_array.group_by(&:itself)
               .values
               .sort_by(&:size)
               .reverse
               .map{|array| array = {product: array.uniq.first, sales: array.length}}
-      ## Groups products to create arrays of number of appearance, then sorts for size and create
-      ## for each product a hash with product = product.code and sales = times of sales together
     end
 
     def total_transactions
@@ -90,4 +99,5 @@ class Product < ActiveRecord::Base
       end
       solo_transactions
     end
+
 end

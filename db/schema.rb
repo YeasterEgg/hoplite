@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20160310145425) do
     t.integer  "code"
     t.integer  "total_sales"
     t.string   "name"
+    t.decimal  "price"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

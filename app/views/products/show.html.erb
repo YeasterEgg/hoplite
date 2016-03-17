@@ -8,7 +8,7 @@
   <strong>Codice:</strong>
   <%= @product.code %>
   <strong>Prezzo:</strong>
-  <%= number_to_currency(@product.price, unit: "€", separator: ",", delimiter: "", format: "%n %u") %>
+  <%= number_to_currency(@product[:price], unit: "€", separator: ",", delimiter: "", format: "%n %u") %>
 </p>
 
 <div id = "charts">

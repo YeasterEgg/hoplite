@@ -49,11 +49,17 @@ class SalesController < ApplicationController
                 checked: false,
               }
       Sale.find_or_create_by(result)
-      if Product.find_by_code(match[2]).nil?
-        new_product = Product.create({code: match[2], total_sales: 1})
-        skip_name ? new_product.update_attribute(:name, 'NessunNome') : new_product.update_attribute(:name, new_product.find_out_name)
+      product = Product.find_by_code(match[2])
+      if product.nil?
+        new_product = Product.create({
+                                      code: match[2],
+                                      total_sales: 1,
+                                      price: BigDecimal(match[3].gsub(',','.')),
+                                      })
+        skip_name ? new_product.update_attribute(:name, nil) : new_product.update_attribute(:name, new_product.find_out_name)
       else
-        Product.find_by_code(match[2]).increment!(:total_sales, match[4].to_i)
+        product.update_attribute(:price, product.new_price_average(match[3]))
+        product.increment!(:total_sales, match[4].to_i)
       end
     end
 end

@@ -14,6 +14,9 @@ class ProductsController < ApplicationController
   end
 
   def show
+    if @product[:name].nil?
+      @product.set_name
+    end
     @all_pairs = @product.all_pairs
   end
 
