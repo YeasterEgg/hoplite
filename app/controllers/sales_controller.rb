@@ -56,7 +56,7 @@ class SalesController < ApplicationController
                                       name: nil,
                                       })
       else
-        product.update_attribute(:price, product.new_price_average(match[3]))
+        product.update_attribute(:price, product.new_price_average(match[3].gsub(',','.').to_f))
         product.increment!(:total_sales, match[4].to_i)
       end
     end
