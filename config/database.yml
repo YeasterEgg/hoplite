@@ -12,7 +12,7 @@ default: &default
 development:
   <<: *default
   database: decks_dev
-  username: luca.mattiazzi
+  username: luca
 
 production:
   <<: *default
