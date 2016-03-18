@@ -1,7 +1,5 @@
 class SalesController < ApplicationController
 
-  require 'bigdecimal'
-
   def destroy
     @sale.destroy
     respond_to do |format|
@@ -27,14 +25,14 @@ class SalesController < ApplicationController
     def check_for_regex(line)
       regex = /(\d{2}\/\d{2}\/\d{2})\s+(\d{4,7})\s+(\d+,\d+)\s+(\d+)\s+\d+\/\d+\/(\d+)\/\d+(\/[MN].+)?/
       match = line.match regex
-      if !match.nil? and match[6].nil? and match[2] != '73729'
+      if !match.nil? and match[6].nil? and match[2] != '73729' and match[2] != '65977'
         create_sale_and_product(match)
       end
     end
 
     def create_sale_and_product(match, skip_name = true)
       ## Creates a sale for each line of the file. Every sale group to a transaction, which can be
-      ## identified via its date and transaction_code values. In order to combine them in a single
+      ## identified via g date and transaction_code values. In order to combine them in a single
       ## parameter that is both univoque and decombined in its original values, i turn transaction_code
       ## into seconds and add them to date. Hoping that transaction_code never grows higher than
       ## 86400. Then maybe something like GMT or ms might come in handy.
@@ -44,7 +42,7 @@ class SalesController < ApplicationController
       result = {
                 date: DateTime.strptime(match[1],'%d/%m/%y') + match[5].to_i.seconds,
                 product_code: match[2],
-                price:  BigDecimal(match[3].gsub(',','.')),
+                price:  match[3].gsub(',','.').to_f,
                 quantity: match[4],
                 checked: false,
               }
@@ -53,10 +51,10 @@ class SalesController < ApplicationController
       if product.nil?
         new_product = Product.create({
                                       code: match[2],
-                                      total_sales: 1,
-                                      price: BigDecimal(match[3].gsub(',','.')),
+                                      total_sales: match[4],
+                                      price: match[3].gsub(',','.').to_f,
+                                      name: nil,
                                       })
-        skip_name ? new_product.update_attribute(:name, nil) : new_product.update_attribute(:name, new_product.find_out_name)
       else
         product.update_attribute(:price, product.new_price_average(match[3]))
         product.increment!(:total_sales, match[4].to_i)

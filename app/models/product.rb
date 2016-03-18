@@ -4,12 +4,6 @@ class Product < ActiveRecord::Base
 
   has_many :sales
 
-  def price
-    ## It uses (non-weighted) average price between all of its sales
-    values = Sale.where(product_code: self.code).pluck(:price)
-    BigDecimal(values.sum / values.length)
-  end
-
   def husband_product
     ## Best product for a panoplie, maybe?
     all_pairs[0] || {product: 'Nessuno', sales: ''}
