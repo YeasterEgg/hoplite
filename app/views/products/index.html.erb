@@ -18,9 +18,16 @@
       <br/>
       <%= file_field_tag :sales_file, multiple: true, accept: 'text/plain,application/excel' %>
     </div>
-    <div class="save">
-      <%= submit_tag 'Salva' %>
-    </div>
+    <% if Rails.env.development? %>
+      <div class="save">
+        <%= submit_tag 'Salva' %>
+      </div>
+    <% elsif Rails.env.production? %>
+      <div class="save">
+        <%= submit_tag 'Non attivo al momento', disabled: true %>
+      </div>
+    <% end %>
+
 
   <% end %>
   </div>

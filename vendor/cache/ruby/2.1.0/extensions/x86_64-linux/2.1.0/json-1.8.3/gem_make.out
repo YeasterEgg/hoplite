@@ -1,0 +1,10 @@
+/usr/bin/ruby2.1 extconf.rb
+creating Makefile
+
+make "DESTDIR=" clean
+
+make "DESTDIR="
+make: Nessuna operazione da eseguire per "all".
+
+make "DESTDIR=" install
+installing default libraries
