@@ -8,5 +8,5 @@ compiling debug_inspector.c
 linking shared-object debug_inspector.so
 
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 debug_inspector.so ./.gem.20160318-10811-10pfobr
+/usr/bin/install -c -m 0755 debug_inspector.so ./.gem.20160319-7896-1xe425n
 installing default debug_inspector libraries

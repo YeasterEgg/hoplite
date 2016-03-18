@@ -993,7 +993,7 @@ conftest.c: In function ‘t’:
 conftest.c:13:15: warning: implicit declaration of function ‘rb_enc_alias’ [-Wimplicit-function-declaration]
  int t(void) { rb_enc_alias(); return 0; }
                ^
-/tmp/ccdBpDEN.o: nella funzione "t":
+/tmp/cciursnZ.o: nella funzione "t":
 /home/luca/projects/hoplite/vendor/cache/ruby/2.1.0/gems/pg-0.18.4/ext/conftest.c:13: riferimento non definito a "rb_enc_alias"
 collect2: error: ld returned 1 exit status
 checked program was:
@@ -1165,7 +1165,7 @@ conftest.c: In function ‘t’:
 conftest.c:13:15: warning: implicit declaration of function ‘rb_w32_wrap_io_handle’ [-Wimplicit-function-declaration]
  int t(void) { rb_w32_wrap_io_handle(); return 0; }
                ^
-/tmp/ccryuLPd.o: nella funzione "t":
+/tmp/ccRzsdul.o: nella funzione "t":
 /home/luca/projects/hoplite/vendor/cache/ruby/2.1.0/gems/pg-0.18.4/ext/conftest.c:13: riferimento non definito a "rb_w32_wrap_io_handle"
 collect2: error: ld returned 1 exit status
 checked program was:

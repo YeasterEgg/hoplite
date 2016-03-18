@@ -70,5 +70,5 @@ compiling pg_type_map_by_column.c
 linking shared-object pg_ext.so
 
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 pg_ext.so ./.gem.20160318-10811-1cttxwh
+/usr/bin/install -c -m 0755 pg_ext.so ./.gem.20160319-7896-1j0fhuv
 installing default pg_ext libraries

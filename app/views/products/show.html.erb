@@ -1,3 +1,11 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load("current", {packages:["corechart"]});
+</script>
+
+<i class="fa fa-chevron-left"></i>
+<%= link_to 'Indietro', products_path %>
+
 <%= render partial: 'google_charts_js', locals: {product: @product, histogram: @product.best_pairs_to_chart.to_json.html_safe, pie: @product.values_for_pie_chart.to_json.html_safe} %>
 
 <p id="notice"><%= notice %></p>

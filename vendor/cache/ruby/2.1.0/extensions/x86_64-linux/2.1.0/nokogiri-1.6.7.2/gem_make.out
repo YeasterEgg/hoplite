@@ -281,5 +281,5 @@ rmdir -p /home/luca/projects/hoplite/vendor/cache/ruby/2.1.0/gems/nokogiri-1.6.7
 rm -rf /home/luca/projects/hoplite/vendor/cache/ruby/2.1.0/gems/nokogiri-1.6.7.2/ports
 
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 nokogiri.so ./.gem.20160318-10811-1smt0yo/nokogiri
+/usr/bin/install -c -m 0755 nokogiri.so ./.gem.20160319-7896-vv3ubh/nokogiri
 installing default nokogiri libraries

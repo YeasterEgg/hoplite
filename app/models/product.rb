@@ -26,7 +26,6 @@ class Product < ActiveRecord::Base
 
   def best_pairs_to_chart(pairs_number = 20)
     best_pairs = all_pairs.shift(pairs_number)
-    others = all_pairs.map{|panoplie| panoplie[:sales]}.sum
     best_pairs_to_chart = [
                           ["Prodotto", "Quantità",{ role: 'style' }]
                         ]
@@ -36,7 +35,6 @@ class Product < ActiveRecord::Base
       intensity = (255 * sales_vs_best).round.to_s(16)
       best_pairs_to_chart << [pair[:product].to_s, pair[:sales], "#0000#{intensity}"]
     end
-    best_pairs_to_chart << ["Altri", others, "#00FF00"]
     best_pairs_to_chart
   end
 
