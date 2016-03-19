@@ -4,11 +4,6 @@ class Product < ActiveRecord::Base
 
   has_many :sales
 
-  def to_param
-    code
-  end
-
-
   def husband_product
     ## Best product for a panoplie, maybe?
     all_pairs[0] || {product: 'Nessuno', sales: ''}
