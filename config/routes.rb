@@ -4,6 +4,6 @@ Rails.application.routes.draw do
 
   post 'sales/upload_file', to: 'sales#upload_file', as: 'upload_sales_file'
   get 'cthulhu', to: 'application#destroy_all', as: 'cthulhu'
-  resources :products, only: [:index, :show]
+  resources :products, only: [:index, :show], param: :code
 
 end
