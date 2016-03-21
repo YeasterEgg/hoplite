@@ -17,13 +17,13 @@ class SalesController < ApplicationController
   private
 
     def parse(file)
-      File.read(file.path).scrub.split("\n").each do |sale|
+      IO.readlines(file.path).each do |sale|
         check_for_regex(sale)
       end
     end
 
     def check_for_regex(line)
-      regex = /(\d{2}\/\d{2}\/\d{2})\s+(\d{4,7})\s+(\d+,\d+)\s+(\d+)\s+\d+\/\d+\/(\d+)\/\d+(\/[MN].+)?/
+      regex = /\A(\d{2}\/\d{2}\/\d{2})\s+(\d{4,7})\s+(\d+,\d+)\s+(\d+)\s+\d+\/\d+\/(\d+)\/\d+(\/[MN].+)?/
       match = line.match regex
       if !match.nil? and match[6].nil? and match[2] != '73729' and match[2] != '65977'
         create_sale_and_product(match)
