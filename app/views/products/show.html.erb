@@ -1,15 +1,10 @@
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-  google.charts.load("current", {packages:["corechart"]});
-</script>
-
 <%= link_to 'Indietro', products_path %>
 
 <p id="notice"><%= notice %></p>
 
 <h1><%= @product.name %></h1>
 
-<p id = "product_details">
+<p id = "product_details", data-id= <%= @product.id %> >
   <strong>Codice:</strong>
   <%= @product.code %>
   <strong>Prezzo:</strong>

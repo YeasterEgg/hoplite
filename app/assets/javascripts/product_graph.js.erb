@@ -1,0 +1,38 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+google.charts.load('current', {'packages':['corechart']});
+
+var get_data = function(){
+	var id = $('#product_details').data('id')
+	$.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: '/products/' + id + '/graph_data',
+            dataType: 'json',
+            data: "", 
+            success: function (data) {
+            	drawChart(data);
+        	},
+            error: function (result) {
+            }
+	    });
+}
+
+$(document).ready(function(){
+	if ($('#product_details').length > 0)
+		google.charts.setOnLoadCallback(get_data);
+});
+
+      
+function drawChart(data) {
+
+var data = data
+
+var options = {
+  title: 'My Daily Activities'
+};
+
+var chart = new google.visualization.BarChart(document.getElementById('histogram_container'));
+
+chart.draw(data, options);
+}
