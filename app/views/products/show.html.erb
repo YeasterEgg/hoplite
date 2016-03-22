@@ -44,8 +44,3 @@
 
 
 <%= link_to 'Back', products_path %>
-
-<%= javascript_tag do %>
-  window.histogram = '<%= j @product.best_pairs_to_chart.to_json.html_safe %>';
-  window.pie = '<%= j @product.values_for_pie_chart.to_json.html_safe %>';
-<% end %>
