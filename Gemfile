@@ -12,7 +12,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'mysql2'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'will_paginate'
-gem 'font-awesome-rails'
 gem 'rails_12factor'
 
 group :development, :test, :production do
