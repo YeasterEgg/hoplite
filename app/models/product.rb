@@ -36,12 +36,11 @@ class Product < ActiveRecord::Base
 
   private
 
-    def best_pairs_to_chart(pairs_number = 20)
-      best_pairs = all_pairs.shift(pairs_number)
+    def best_pairs_to_chart(pairs_number = 10)
+      best_pairs = get_best_pairs
       best_pairs_to_chart = [
                             ["Prodotto", "Quantità",{ role: 'style' }]
                           ]
-      best_pairs_to_chart << ["Solo", solo_transactions, "#FF0000"]
       best_pairs.each do |pair|
         sales_vs_best = pair[:sales] / best_pairs[0][:sales]
         intensity = (255 * sales_vs_best).round.to_s(16)
@@ -51,11 +50,13 @@ class Product < ActiveRecord::Base
     end
 
     def values_for_pie_chart
+      best_pairs_transactions = get_best_pairs.map{|pair| pair[:sales]}.sum
       values_for_pie_chart = [
                             ['Prodotto', 'Quantità']
                           ]
       values_for_pie_chart << ['Solo', solo_transactions]
-      values_for_pie_chart << ['In Panoplie', total_transactions - solo_transactions]
+      values_for_pie_chart << ['Panoplie Top10', best_pairs_transactions]
+      values_for_pie_chart << ['Panoplie Altre', total_transactions - solo_transactions - best_pairs_transactions]
     end
 
     def find_out_name
@@ -85,6 +86,10 @@ class Product < ActiveRecord::Base
 
     def total_transactions
       Sale.where(product_code: self.code).size
+    end
+
+    def get_best_pairs(pairs = 10)
+      best_pairs = all_pairs.shift(pairs)
     end
 
     def solo_transactions
