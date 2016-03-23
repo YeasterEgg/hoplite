@@ -59,15 +59,16 @@
 
       <tbody>
         <% @collection.each do |product| %>
-          <tr
+          <tr>
+            <td><%= link_to product.name || 'Nessun Nome', product_path(product.code) %></td>
+            <td><%= product.code %></td>
+            <td
             <% if product.id == @lucky_one %>
               class='comic'>
             <% else %>
               >
             <% end %>
-            <td><%= link_to product.name || 'Nessun Nome', product_path(product.code) %></td>
-            <td><%= product.code %></td>
-            <td><%= number_to_currency(product[:price], unit: "€", separator: ",", delimiter: "", format: "%n %u") %></td>
+              <%= number_to_currency(product[:price], unit: "€", separator: ",", delimiter: "", format: "%n %u") %></td>
             <td><%= product.total_sales %></td>
             <td><%= "#{product.husband_product[:product]} (#{product.husband_product[:sales]} volte)" %></td>
           </tr>
