@@ -65,7 +65,7 @@
             <% else %>
               >
             <% end %>
-            <td><%= link_to product.name || 'NoName', product_path(product) %></td>
+            <td><%= link_to product.name || 'Nessun Nome', product_path(product.code) %></td>
             <td><%= product.code %></td>
             <td><%= number_to_currency(product[:price], unit: "€", separator: ",", delimiter: "", format: "%n %u") %></td>
             <td><%= product.total_sales %></td>
