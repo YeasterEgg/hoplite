@@ -64,7 +64,7 @@ class ProductsController < ApplicationController
   def graph_data
     respond_to do |format|
       format.json {
-        render :json => Product.find(params[:code]).best_pairs_to_chart
+        render :json => Product.find(params[:code]).values_for_charts
       }
     end
   end

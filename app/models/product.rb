@@ -24,33 +24,39 @@ class Product < ActiveRecord::Base
     self.update_attribute(:name, find_out_name)
   end
 
-  def best_pairs_to_chart(pairs_number = 20)
-    best_pairs = all_pairs.shift(pairs_number)
-    best_pairs_to_chart = [
-                          ["Prodotto", "Quantità",{ role: 'style' }]
-                        ]
-    best_pairs_to_chart << ["Solo", solo_transactions, "#FF0000"]
-    best_pairs.each do |pair|
-      sales_vs_best = pair[:sales] / best_pairs[0][:sales]
-      intensity = (255 * sales_vs_best).round.to_s(16)
-      best_pairs_to_chart << [pair[:product].to_s, pair[:sales], "#0000#{intensity}"]
-    end
-    best_pairs_to_chart
-  end
-
-  def values_for_pie_chart
-    values_for_pie_chart = [
-                          ['Prodotto', 'Quantità']
-                        ]
-    values_for_pie_chart << ['Solo', solo_transactions]
-    values_for_pie_chart << ['In Panoplie', total_transactions - solo_transactions]
-  end
-
   def new_price_average(last_price)
     (self[:price] * self[:total_sales] + last_price.to_f) / (self[:total_sales]+1)
   end
 
+  def values_for_charts
+    values = []
+    values << best_pairs_to_chart
+    values << values_for_pie_chart
+  end
+
   private
+
+    def best_pairs_to_chart(pairs_number = 20)
+      best_pairs = all_pairs.shift(pairs_number)
+      best_pairs_to_chart = [
+                            ["Prodotto", "Quantità",{ role: 'style' }]
+                          ]
+      best_pairs_to_chart << ["Solo", solo_transactions, "#FF0000"]
+      best_pairs.each do |pair|
+        sales_vs_best = pair[:sales] / best_pairs[0][:sales]
+        intensity = (255 * sales_vs_best).round.to_s(16)
+        best_pairs_to_chart << [pair[:product].to_s, pair[:sales], "#0000#{intensity}"]
+      end
+      best_pairs_to_chart
+    end
+
+    def values_for_pie_chart
+      values_for_pie_chart = [
+                            ['Prodotto', 'Quantità']
+                          ]
+      values_for_pie_chart << ['Solo', solo_transactions]
+      values_for_pie_chart << ['In Panoplie', total_transactions - solo_transactions]
+    end
 
     def find_out_name
       ## It works only with live products, also it's really unstable + product names SUCKS.

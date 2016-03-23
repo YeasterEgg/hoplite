@@ -1,38 +1,65 @@
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
 google.charts.load('current', {'packages':['corechart']});
 
-var get_data = function(){
-	var id = $('#product_details').data('id')
-	$.ajax({
-            type: "GET",
-            contentType: "application/json; charset=utf-8",
-            url: '/products/' + id + '/graph_data',
-            dataType: 'json',
-            data: "", 
-            success: function (data) {
-            	drawChart(data);
-        	},
-            error: function (result) {
-            }
-	    });
-}
+$(document).on('page:load',callbackForGoogle);
 
-$(document).ready(function(){
-	if ($('#product_details').length > 0)
-		google.charts.setOnLoadCallback(get_data);
-});
+$(document).ready(callbackForGoogle);
 
-      
-function drawChart(data) {
-
-var data = data
-
-var options = {
-  title: 'My Daily Activities'
+function callbackForGoogle(){
+  if ($('#product_details').length > 0)
+    google.charts.setOnLoadCallback(ajaxCall);
 };
 
-var chart = new google.visualization.BarChart(document.getElementById('histogram_container'));
+function ajaxCall(){
+	var productId = $('#product_details').data('id');
+	$.ajax({
+          type: "GET",
+          contentType: "application/json; charset=utf-8",
+          url: '/products/' + productId + '/graph_data',
+          dataType: 'json',
+          data: "",
+          success: function (data) {
+            drawCharts(data);
+        	},
+          error: function (result) {
+              alert(result)
+          },
+	});
+};
 
-chart.draw(data, options);
-}
+
+function drawCharts(ajaxData) {
+  var histogramData = google.visualization.arrayToDataTable(ajaxData[0]);
+  var pieChartData = google.visualization.arrayToDataTable(ajaxData[1]);
+
+  var histogramOptions = {
+    title: 'Vendite Complementari',
+    titleTextStyle: {
+      fontSize: 18,
+      bold: true,
+    },
+    animation: {
+      'startup': true,
+      'duration': 1000,
+      'easing': 'inAndOut',
+    },
+  };
+
+  var pieChartOptions = {
+    title: 'Composizione Vendite',
+    titleTextStyle: {
+      fontSize: 18,
+      bold: true,
+    },
+    animation: {
+      'startup': true,
+      'duration': 1000,
+      'easing': 'inAndOut',
+    },
+  };
+
+  var histogram = new google.visualization.ColumnChart(document.getElementById('histogram_container'));
+  var pieChart = new google.visualization.PieChart(document.getElementById('pie_container'));
+
+  histogram.draw(histogramData, histogramOptions);
+  pieChart.draw(pieChartData, pieChartOptions);
+};
