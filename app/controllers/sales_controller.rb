@@ -17,8 +17,8 @@ class SalesController < ApplicationController
   private
 
     def parse(file)
-      IO.readlines(file.path).scrub.each do |sale|
-        check_for_regex(sale)
+      IO.readlines(file.path).each do |sale|
+        check_for_regex(sale.scrub)
       end
     end
 
