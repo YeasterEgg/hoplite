@@ -85,7 +85,7 @@ class Product < ActiveRecord::Base
     end
 
     def total_transactions
-      Sale.where(product_code: self.code).size
+      Sale.where(product_code: self.code).pluck(:quantity).sum
     end
 
     def get_best_pairs(pairs = 10)
@@ -93,11 +93,11 @@ class Product < ActiveRecord::Base
     end
 
     def solo_transactions
-      product_sales_dates = Sale.where(product_code: self.code).pluck(:date)
       solo_transactions = 0
-      product_sales_dates.each do |date|
-        if Sale.where(date: date).size == 1
-          solo_transactions += 1
+      product_sales = Sale.where(product_code: self.code)
+      product_sales.each do |sale|
+        if Sale.where(date: sale.date).size == 1
+          solo_transactions += sale.quantity
         end
       end
       solo_transactions
