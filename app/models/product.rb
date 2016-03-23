@@ -42,7 +42,7 @@ class Product < ActiveRecord::Base
   private
 
     def best_pairs_to_chart(pairs_number = 10)
-      best_pairs = get_best_pairs
+      best_pairs = all_pairs.shift(pairs_number)
       best_pairs_to_chart = [
                             ["Prodotto", "Quantità",{ role: 'style' }]
                           ]
@@ -55,13 +55,11 @@ class Product < ActiveRecord::Base
     end
 
     def values_for_pie_chart
-      best_pairs_transactions = get_best_pairs.map{|pair| pair[:sales]}.sum
       values_for_pie_chart = [
                             ['Prodotto', 'Quantità']
                           ]
       values_for_pie_chart << ['Solo', solo_transactions]
-      values_for_pie_chart << ['Panoplie Top10', best_pairs_transactions]
-      values_for_pie_chart << ['Panoplie Altre', total_transactions - solo_transactions - best_pairs_transactions]
+      values_for_pie_chart << ['Panoplie', total_transactions - solo_transactions]
     end
 
     def find_out_name
@@ -91,10 +89,6 @@ class Product < ActiveRecord::Base
 
     def total_transactions
       Sale.where(product_code: self.code).pluck(:quantity).sum
-    end
-
-    def get_best_pairs(pairs = 10)
-      best_pairs = all_pairs.shift(pairs)
     end
 
     def solo_transactions
