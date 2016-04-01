@@ -2,6 +2,8 @@
 
 <p id="notice"><%= notice %></p>
 
+<%= render partial: '/shared/search_form' %>
+
 <h1><%= @product.name %></h1>
 
 <p id = "product_details", data-id= <%= @product.id %> >
@@ -11,34 +13,6 @@
   <%= number_to_currency(@product[:price], unit: "€", separator: ",", delimiter: "", format: "%n %u") %>
 </p>
 
-<div id = "charts">
-  <div id="pie_container" style="width:50%; height:400px;"></div>
-  <div id="histogram_container" style="width:50%; height:400px;"></div>
-</div>
-
-<table class="panoplie_table">
-  <colgroup>
-    <col style="width: 50%;">
-    <col style="width: 25%;">
-    <col style="width: 25%;">
-  </colgroup>
-  <thead>
-    <tr>
-      <th>Nome Prodotto</th>
-      <th>Codice Prodotto</th>
-      <th>Vendite complementari</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @all_pairs[0..20].each do |pair| %>
-      <tr>
-        <td><%= link_to Product.find_by_code(pair[:product]).name || 'Nessun Nome', product_path(pair[:product]) %></td>
-        <td><%= pair[:product] %></td>
-        <td><%= pair[:sales] %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<%= render partial: '/shared/product_info' %>
 
 <%= link_to 'Indietro', products_path %>

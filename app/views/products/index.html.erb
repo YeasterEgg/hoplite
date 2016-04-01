@@ -1,89 +1,11 @@
 <p id="notice"><%= notice %></p>
 <div class="wrap">
 
-  <div class="search_form">
-    <%= search_form_for @search do |f| %>
+<%= render partial: '/shared/search_form' %>
 
-      <%= f.label :code_or_name_cont, 'Ricerca Prodotto' %>
-      <%= f.search_field :code_or_name_cont %>
+<%= render partial: '/shared/upload_form' %>
 
-      <%= f.submit 'Cerca' %>
-    <% end %>
-  </div>
+<%= render partial: '/shared/products_table' %>
 
-  <div class="upload_form">
-  <%= form_tag({controller: :sales, action: :upload_file, method: :post}, multipart: true) do |f| %>
-    <div class="browse_button">
-      <%= label :sales_file, 'Seleziona il File da caricare' %>
-      <br/>
-      <%= file_field_tag :sales_file, multiple: true, accept: 'text/plain,application/excel' %>
-    </div>
-    <% if Rails.env.development? or params[:override] == 'ohyeah'  %>
-      <div class="save">
-        <%= submit_tag 'Salva' %>
-      </div>
-    <% elsif Rails.env.production? %>
-      <div class="save">
-        <%= submit_tag 'Eh no, non è tempo nè luogo', disabled: true %>
-      </div>
-    <% end %>
-
-
-  <% end %>
-  </div>
-
-  <div class="container">
-    <h1>Elenco dei Prodotti</h1>
-
-    <div class="flickr_pagination">
-        <%= will_paginate @collection, :container => false %>
-    </div>
-
-    <table class="product_table">
-      <colgroup>
-        <col span="1" style="width: 30%;">
-        <col span="1" style="width: 20%;">
-        <col span="1" style="width: 15%;">
-        <col span="1" style="width: 15%;">
-        <col span="1" style="width: 25%;">
-      </colgroup>
-      <thead>
-        <tr>
-          <th>Nome Prodotto</th>
-          <th>Codice Prodotto</th>
-          <th>Prezzo</th>
-          <th><%= sort_link(@search, :total_sales, 'Quantità Vendute', default_order: :desc) %></th>
-          <th>Miglior Panoplie</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @collection.each do |product| %>
-          <tr>
-            <td><%= link_to product.name || 'Nessun Nome', product_path(product.code) %></td>
-            <td><%= product.code %></td>
-            <td
-            <% if product.id == @lucky_one %>
-              class='comic'>
-            <% else %>
-              >
-            <% end %>
-              <%= number_to_currency(product[:price], unit: "€", separator: ",", delimiter: "", format: "%n %u") %></td>
-            <td><%= product.total_sales %></td>
-            <td><%= "#{product.husband_product[:product]} (#{product.husband_product[:sales]} volte)" %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <br>
-
-    <div class="flickr_pagination">
-        <div class="page_info">
-          <%= page_entries_info @collection %>
-        </div>
-        <%= will_paginate @collection, :container => false %>
-    </div>
-
-  </div>
 </div>
 

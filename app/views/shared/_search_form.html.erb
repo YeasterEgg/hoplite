@@ -1,0 +1,9 @@
+<div class="search_form">
+  <%= search_form_for @search do |f| %>
+
+    <%= f.label :code_or_name_cont, 'Ricerca Prodotto' %>
+    <%= f.search_field :code_or_name_cont %>
+
+    <%= f.submit 'Cerca' %>
+  <% end %>
+</div>
