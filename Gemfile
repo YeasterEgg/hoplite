@@ -13,12 +13,12 @@ gem 'mysql2'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'will_paginate'
 gem 'rails_12factor'
+gem "awesome_print"
 
 group :development, :test, :production do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'better_errors'
-  gem "awesome_print"
 end
 
 group :development do
