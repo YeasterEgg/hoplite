@@ -8,7 +8,6 @@ class Product < ActiveRecord::Base
     code
   end
 
-
   def husband_product
     ## Best product for a panoplie, maybe?
     all_pairs[0] || {product: 'Nessuno', sales: ''}
@@ -37,6 +36,10 @@ class Product < ActiveRecord::Base
     values = []
     values << best_pairs_to_chart
     values << values_for_pie_chart
+  end
+
+  def total_worth
+    self[:total_sales] * self[:price]
   end
 
   private
@@ -79,12 +82,17 @@ class Product < ActiveRecord::Base
     def sort_and_count(bi_array)
       ## IF AND WHEN I SORT IT OUT, FIX THE SORT AND REVERSE
       ## Groups products to create arrays of number of appearance, then sorts for size and create
-      ## for each product a hash with product = product.code and sales = times of sales together
+      ## for each product a hash with product = product.code, sales = times of sales together and
+      ## total_worth = combined value of all panoplie sales
       bi_array.group_by(&:itself)
               .values
               .sort_by(&:size)
               .reverse
-              .map{|array| array = {product: array.uniq.first, sales: array.length}}
+              .map{|array| array = {product: array.uniq.first,
+                                    sales: array.length,
+                                    total_worth: array.length * (self[:price] + Product.find_by_code(array.uniq.first)[:price])
+                                    }
+                    }
     end
 
     def total_transactions
