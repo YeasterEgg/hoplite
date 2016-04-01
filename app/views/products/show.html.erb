@@ -1,18 +1,7 @@
-<%= link_to 'Indietro', products_path %>
-
 <p id="notice"><%= notice %></p>
 
 <%= render partial: '/shared/search_form' %>
 
-<h1><%= @product.name %></h1>
-
-<p id = "product_details", data-id= <%= @product.id %> >
-  <strong>Codice:</strong>
-  <%= @product.code %>
-  <strong>Prezzo:</strong>
-  <%= number_to_currency(@product[:price], unit: "€", separator: ",", delimiter: "", format: "%n %u") %>
-</p>
-
 <%= render partial: '/shared/product_info' %>
 
-<%= link_to 'Indietro', products_path %>
+<%= render partial: '/shared/product_data' %>

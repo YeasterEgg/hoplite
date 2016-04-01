@@ -1,0 +1,43 @@
+<h1><%= @product.name %></h1>
+
+<p id = "product_details", data-id= <%= @product.id %> >
+  <strong>Codice:</strong>
+  <%= @product.code %>
+  <strong>Prezzo:</strong>
+  <%= number_to_currency(@product[:price], unit: "€", separator: ",", delimiter: "", format: "%n %u") %>
+</p>
+
+<div id = "charts">
+  <div id="pie_container" style="width:50%; height:400px;"></div>
+  <div id="histogram_container" style="width:50%; height:400px;"></div>
+</div>
+
+<table class="product_data">
+  <colgroup>
+    <col style="width: 40%;">
+    <col style="width: 15%;">
+    <col style="width: 15%;">
+    <col style="width: 15%;">
+    <col style="width: 15%;">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Nome Prodotto</th>
+      <th>Codice Prodotto</th>
+      <th>Vendite complementari</th>
+      <th>Percentuale sul totale vendite</th>
+      <th>Valore vendite combinate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @all_pairs[0..20].each do |pair| %>
+      <tr>
+        <td><%= link_to Product.find_by_code(pair[:product]).name || 'Nessun Nome', product_path(pair[:product]) %></td>
+        <td><%= pair[:product] %></td>
+        <td><%= pair[:sales] %></td>
+        <td><%= nice_percentual(pair[:sales].to_f / @product[:total_sales]) %></td>
+        <td><%= nice_price(pair[:total_worth]) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

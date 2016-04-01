@@ -1,0 +1,37 @@
+// Place all the styles related to the sales controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+  font-family: helvetica , sans-serif;
+}
+
+.top_header {
+  background-color: #e0e0e0;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  font-size: 15px;
+  width: 30%;
+  height: 50px;
+  text-align: center;
+  position: absolute;
+  top: 0%;
+}
+
+.top_left {
+  border-radius: 0px 0px 10px 0px;
+  left: 0%;
+}
+
+.top_right {
+  border-radius: 0px 0px 0px 10px;
+  right: 0%;
+}
+
+.comic {
+  font-family: 'Comic Sans MS';
+}
+
+.new {
+  text-align: right;
+}
