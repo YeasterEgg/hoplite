@@ -16,7 +16,7 @@ class ProductsController < ApplicationController
   def show
     @search = Product.ransack(params[:q])
     if @product[:name].nil?
-      @product.set_name
+      @product.set_name_and_website
     end
     @all_pairs = @product.all_pairs
   end

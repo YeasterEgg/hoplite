@@ -24,8 +24,9 @@ class Product < ActiveRecord::Base
     sort_and_count(product_sales_panoplie_codes)
   end
 
-  def set_name
-    self.update_attribute(:name, find_out_name)
+  def set_name_and_website
+    params = find_out_name
+    self.update_attributes(name: params[:name], website: params[:website])
   end
 
   def new_price_average(last_price)
@@ -70,7 +71,17 @@ class Product < ActiveRecord::Base
       ## That said, it's FUCKINGSLOW&dirty, still better than nothing
       product_url = URI("http://www.decathlon.it/Comprare/#{self.code}")
       response_to_url = Net::HTTP.get_response(product_url)
-      response_to_url['location'].nil? ? 'ProdottoInattivo' : parse_product_title(response_to_url['location'])
+      if response_to_url['location']
+        return {
+                name: parse_product_title(response_to_url['location']),
+                website: response_to_url['location'],
+               }
+      else
+        return {
+                name: 'ProdottoInattivo',
+                website: 'www.decathlon.it',
+               }
+      end
     end
 
     def parse_product_title(title)
