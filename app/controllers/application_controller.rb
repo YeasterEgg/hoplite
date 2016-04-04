@@ -8,10 +8,4 @@ class ApplicationController < ActionController::Base
     I18n.locale = :it
   end
 
-  def destroy_all
-  	Sale.destroy_all
-  	Product.destroy_all
-  	redirect_to products_path
-  end
-
 end
