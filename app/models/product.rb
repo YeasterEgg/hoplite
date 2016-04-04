@@ -59,11 +59,7 @@ class Product < ActiveRecord::Base
     end
 
     def values_for_pie_chart
-      values_for_pie_chart = [
-                            ['Prodotto', 'Quantità']
-                          ]
-      values_for_pie_chart << ['Solo', solo_transactions]
-      values_for_pie_chart << ['Panoplie', total_transactions - solo_transactions]
+      values_for_pie_chart = ticket_by_size.unshift(['Quantità nello scontrino', 'Ripetizioni'])
     end
 
     def find_out_name
@@ -110,15 +106,11 @@ class Product < ActiveRecord::Base
       Sale.where(product_code: self.code).pluck(:quantity).sum
     end
 
-    def solo_transactions
-      solo_transactions = 0
-      product_sales = Sale.where(product_code: self.code)
-      product_sales.each do |sale|
-        if Sale.where(date: sale.date).size == 1
-          solo_transactions += sale.quantity
-        end
-      end
-      solo_transactions
+    def ticket_by_size
+      ticket_by_size = []
+      product_tickets = Ticket.where(sale_date: Sale.where(product_code: self[:code]).pluck(:date)).pluck(:quantity)
+      product_tickets.uniq.sort.map{|quantity| ticket_by_size << ["#{quantity} prodotto/i", product_tickets.count(quantity)]}
+      ticket_by_size
     end
 
 end
