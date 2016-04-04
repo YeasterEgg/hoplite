@@ -1,12 +1,3 @@
-<h1><%= @product.name %></h1>
-
-<p id = "product_details", data-id= <%= @product.id %> >
-  <strong>Codice:</strong>
-  <%= @product.code %>
-  <strong>Prezzo:</strong>
-  <%= number_to_currency(@product[:price], unit: "€", separator: ",", delimiter: "", format: "%n %u") %>
-</p>
-
 <div id = "charts">
   <div id="pie_container" style="width:50%; height:400px;"></div>
   <div id="histogram_container" style="width:50%; height:400px;"></div>

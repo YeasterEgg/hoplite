@@ -1,7 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-<%= render partial: '/shared/search_form' %>
-
-<%= render partial: '/shared/product_info' %>
+<%= render partial: '/shared/navbar', locals: {central: "central_show", left:"product_info"} %>
 
 <%= render partial: '/shared/product_data' %>

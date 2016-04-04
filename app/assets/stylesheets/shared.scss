@@ -6,26 +6,41 @@ body {
   font-family: helvetica , sans-serif;
 }
 
-.top_header {
-  background-color: #e0e0e0;
-  padding-bottom: 15px;
-  padding-top: 15px;
+.navbar {
+  height: 60px;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  top: 0px;
+  z-index: 1000;
+  left:0;
+  right:0;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.navbar_item {
   font-size: 15px;
   width: 30%;
-  height: 50px;
   text-align: center;
-  position: absolute;
-  top: 0%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  opacity: 0.75;
 }
 
 .top_left {
   border-radius: 0px 0px 10px 0px;
-  left: 0%;
 }
 
 .top_right {
   border-radius: 0px 0px 0px 10px;
-  right: 0%;
+}
+
+.top_center {
+  border-radius: 0px 0px 10px 10px;
 }
 
 .comic {
@@ -34,4 +49,12 @@ body {
 
 .new {
   text-align: right;
+}
+
+.grey_background {
+  background-color: #e0e0e0;
+}
+
+.charts {
+  margin-top: 50px;
 }
