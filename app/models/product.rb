@@ -79,7 +79,7 @@ class Product < ActiveRecord::Base
       else
         return {
                 name: 'ProdottoInattivo',
-                website: 'www.decathlon.it',
+                website: 'http:://www.decathlon.it',
                }
       end
     end
