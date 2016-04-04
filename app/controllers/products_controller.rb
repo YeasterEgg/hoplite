@@ -2,6 +2,7 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :destroy]
 
   def index
+    ahoy.track "Product Index"
     params[:q] ||= {}
     params[:page] ||= 1
     @search = Product.ransack(params[:q])
@@ -14,6 +15,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    ahoy.track "Product #{@product[:code]}"
     @search = Product.ransack(params[:q])
     if @product[:name].nil?
       @product.set_name_and_website
@@ -36,7 +38,6 @@ class ProductsController < ApplicationController
       }
     end
   end
-
 
   private
     def set_product
