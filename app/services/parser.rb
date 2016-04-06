@@ -77,10 +77,16 @@ class Parser
       new_sale_hash[:ticket_id] = ticket.id
 
       ## If a ticket with the same sale_date exists it increments its values, otherwise it will create
-      ## a new ticket item.
+      ## a new ticket item. Then it appends ticket_id to the sale Hash
+
+      Sale.new(new_sale_hash)
+
+      ## Finally creates a new sale
 
       @old_sale_id = match[5]
       @old_sale_time = date
+
+      ## Keep track of new or old tickets
 
     end
 end

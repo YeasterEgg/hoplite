@@ -16,7 +16,7 @@ class Product < ActiveRecord::Base
   def all_pairs
     ## That's not so simple
     ## Every transaction which contains self (transactions are identified via date)
-    product_sales_dates = Sale.where(product_code: self.code).pluck(:date)
+    product_sales = Sale.where(product_code: self.code).pluck(:date)
     ## Every sale that contains self but those about self
     product_sales_panoplie_codes = Sale.where(date: product_sales_dates)
                                        .where.not(product_code: self.code)
