@@ -10,4 +10,6 @@ Rails.application.routes.draw do
 
   get 'guests', to: 'tools#ahoy_mates', as: 'ahoy_mates'
 
+  get 'onan', to: 'tools#onan', as: 'onan'
+
 end

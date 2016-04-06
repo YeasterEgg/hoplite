@@ -11,4 +11,9 @@ class ToolsController < ApplicationController
     @all_guests = Visit.all
   end
 
+  def onan
+    file = File.new(Rails.root.join('public', 'seed.txt'))
+    Parser.new(file)
+  end
+
 end
