@@ -3,6 +3,7 @@ class Product < ActiveRecord::Base
   require 'bigdecimal'
 
   has_many :sales
+  has_many :tickets, through: :sales
 
   def to_param
     code
