@@ -15,6 +15,7 @@ gem "will_paginate"
 gem "rails_12factor"
 gem "awesome_print"
 gem "ahoy_matey"
+gem 'draper', '~> 1.3'
 
 group :development, :test, :production do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
