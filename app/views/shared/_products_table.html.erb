@@ -27,8 +27,8 @@
     <tbody>
       <% @collection.each do |product| %>
         <tr>
-          <td><%= link_to product.name || 'Nessun Nome', product_path(product.code) %></td>
-          <td><%= product.code %></td>
+          <td><%= link_to product.name || 'Nessun Nome', product_path(product[:code]) %></td>
+          <td><%= product[:code] %></td>
           <td
           <% if product.id == @lucky_one %>
             class='comic'>

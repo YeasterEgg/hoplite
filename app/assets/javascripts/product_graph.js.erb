@@ -10,11 +10,11 @@ function callbackForGoogle(){
 };
 
 function ajaxCall(){
-	var productId = $('#product_details').data('id');
+	var productCode = $('#product_details').data('code');
 	$.ajax({
           type: "GET",
           contentType: "application/json; charset=utf-8",
-          url: '/products/' + productId + '/graph_data',
+          url: '/products/' + productCode + '/graph_data',
           dataType: 'json',
           data: "",
           success: function (data) {

@@ -21,7 +21,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @all_pairs[0..20].each do |pair| %>
+    <% @hashed_pairs.each do |pair| %>
       <tr>
         <td><%= link_to Product.find_by_code(pair[:product]).name || 'Nessun Nome', product_path(pair[:product]) %></td>
         <td><%= pair[:product] %></td>

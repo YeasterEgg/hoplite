@@ -1,9 +1,9 @@
 <div class = "navbar_item top_center grey_background">
-  <h1 style = "margin-bottom:0px;"><%= @product.name %></h1>
+  <h1 style = "margin-bottom:0px;"><%= @product[:name] %></h1>
 
-  <p id = "product_details", data-id= <%= @product.id %> >
+  <p id = "product_details", data-code= <%= @product[:code] %> >
     <strong>Codice:</strong>
-    <%= @product.code %>
+    <%= @product[:code] %>
     <strong>Prezzo:</strong>
     <%= number_to_currency(@product[:price], unit: "€", separator: ",", delimiter: "", format: "%n %u") %>
   </p>
