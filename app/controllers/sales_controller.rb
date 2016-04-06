@@ -63,8 +63,8 @@ class SalesController < ApplicationController
 
       ## Creates a new sale object with the hash from the regex.
 
-      ticket = Ticket.last
-      if ticket && ticket.sale_date == uniq_date_id
+      old_sale = Sale.last
+      if old_sale && old_sale
         ticket.increment!(:quantity, quantity)
         ticket.increment!(:total_worth, price_to_decimal * quantity)
       else

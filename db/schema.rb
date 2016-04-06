@@ -39,19 +39,15 @@ ActiveRecord::Schema.define(version: 20160404104614) do
   end
 
   create_table "sales", force: :cascade do |t|
-    t.datetime "date"
-    t.integer  "quantity"
-    t.string   "product_code"
-    t.decimal  "price",        precision: 5, scale: 2
-    t.boolean  "checked"
-    t.integer  "ticket_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "quantity"
+    t.decimal "price",      precision: 5, scale: 2
+    t.integer "ticket_id"
+    t.integer "product_id"
   end
 
   create_table "tickets", force: :cascade do |t|
     t.integer  "quantity"
-    t.datetime "sale_date"
+    t.datetime "date"
     t.decimal  "total_worth", precision: 5, scale: 2
   end
 
