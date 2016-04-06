@@ -47,11 +47,11 @@ class Parser
 
       product = Product.find_by_code(match[2])
       if product.nil?
-        Product.create({
-                        code: match[2],
-                        total_sales: quantity,
-                        price: price_to_decimal,
-                        })
+        product = Product.create({
+                                  code: match[2],
+                                  total_sales: quantity,
+                                  price: price_to_decimal,
+                                  })
       else
         product.update_attribute(:price, product.new_price_average(price_to_decimal))
         product.increment!(:total_sales, quantity.to_i)
@@ -70,7 +70,7 @@ class Parser
         ticket = Ticket.create({
                                 quantity: quantity,
                                 total_worth: price_to_decimal * quantity,
-                                sale_date: date
+                                date: date
                               })
       end
 
