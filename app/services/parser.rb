@@ -79,7 +79,7 @@ class Parser
       ## If a ticket with the same sale_date exists it increments its values, otherwise it will create
       ## a new ticket item. Then it appends ticket_id to the sale Hash
 
-      Sale.new(new_sale_hash)
+      Sale.create(new_sale_hash)
 
       ## Finally creates a new sale
 
