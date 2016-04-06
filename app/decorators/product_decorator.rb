@@ -27,16 +27,15 @@ class ProductDecorator < ApplicationDecorator
     def top_pairs(pair_number = 30)
       all_sales = []
       object.tickets.each do |ticket|
-        ticket.sales.where.not(product_id: object[:id]).map{|sale| all_sales << sale[:product_id]}
+        ticket.sales.where.not(product_id: object[:id]).map{|sale| all_sales << sale}
       end
       counted_sales = Hash.new(0)
-      all_sales.each do |sale|
+      all_sales.uniq(&:ticket_id).map(&:product_id).each do |sale|
         counted_sales[sale] += 1
       end
       counted_sales.sort_by{ |key,value| value}
                    .last(pair_number)
                    .reverse
-      CACCA
     end
 
     def best_pairs_to_chart(pairs_number = 10)
