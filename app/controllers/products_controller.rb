@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
                          .per_page(20)
                          .decorate
     if @collection.length > 10
-      @lucky_one = @collection.pluck(:id).sample
+      @lucky_one = @collection.sample[:id]
     else
       @lucky_one = '2eazy'
     end

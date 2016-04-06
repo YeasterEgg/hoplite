@@ -36,6 +36,7 @@ class ProductDecorator < ApplicationDecorator
       counted_sales.sort_by{ |key,value| value}
                    .last(pair_number)
                    .reverse
+      CACCA
     end
 
     def best_pairs_to_chart(pairs_number = 10)
