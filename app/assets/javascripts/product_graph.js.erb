@@ -30,6 +30,7 @@ function ajaxCall(){
 function drawCharts(ajaxData) {
   var histogramData = google.visualization.arrayToDataTable(ajaxData[0]);
   var pieChartData = google.visualization.arrayToDataTable(ajaxData[1]);
+  var scatterPlotData = google.visualization.arrayToDataTable(ajaxData[2]);
 
   var histogramOptions = {
     title: 'Vendite Complementari',
@@ -57,9 +58,23 @@ function drawCharts(ajaxData) {
     },
   };
 
+  var scatterPlotOptions = {
+    title: 'Vendite al giorno',
+    hAxis: {title: 'Data'},
+    vAxis: {title: 'Vendite', minValue: 1, maxValue: 100},
+    legend: 'none',
+    animation: {
+      'startup': true,
+      'duration': 1000,
+      'easing': 'inAndOut',
+    },
+  };
+
   var histogram = new google.visualization.ColumnChart(document.getElementById('histogram_container'));
   var pieChart = new google.visualization.PieChart(document.getElementById('pie_container'));
+  var scatterPlot = new google.visualization.ScatterChart(document.getElementById('scatter_container'));
 
   histogram.draw(histogramData, histogramOptions);
   pieChart.draw(pieChartData, pieChartOptions);
+  scatterPlot.draw(scatterPlotData, scatterPlotOptions);
 };

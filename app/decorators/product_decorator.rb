@@ -20,6 +20,7 @@ class ProductDecorator < ApplicationDecorator
     values = []
     values << best_pairs_to_chart
     values << values_for_pie_chart
+    values << values_for_scatterplot
   end
 
     private
@@ -53,6 +54,12 @@ class ProductDecorator < ApplicationDecorator
 
     def values_for_pie_chart
       ticket_by_size.unshift(['Quantità nello scontrino', 'Ripetizioni'])
+    end
+
+    def values_for_scatterplot
+      values_for_scatterplot = [["Data", "Vendite"]]
+      tickets.group_by(&:date).map{|date,tickets| values_for_scatterplot << [date.strftime("%d/%m/%y"), tickets.size]}
+      values_for_scatterplot
     end
 
     def ticket_by_size
