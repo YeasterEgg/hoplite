@@ -1,0 +1,10 @@
+<ul>
+<% @sales_quantities.each do |sale| %>
+  <li><%= "Numero prodotti: #{sale[0]} - Occorrenze #{sale[1]}<br/>".html_safe %></li>
+<% end %>
+
+<br/>
+<li><%= "Valore totale vendite: #{nice_price(@total_worth)}" %></li>
+<li><%= "Numero totale vendite: #{@total_quantity.to_s}" %></li>
+<li><%= "Valore medio vendite: #{nice_price(@average_sale)}" %></li>
+</ul>
