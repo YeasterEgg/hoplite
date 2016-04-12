@@ -5,7 +5,7 @@ class CreateProducts < ActiveRecord::Migration
       t.string :name
       t.string :website
       t.integer :total_sales
-      t.decimal :price, precision: 5, scale: 2
+      t.decimal :price, precision: 6, scale: 2
 
       t.timestamps null: true
     end

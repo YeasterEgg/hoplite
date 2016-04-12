@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160404104614) do
+ActiveRecord::Schema.define(version: 20160412123510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,19 +28,25 @@ ActiveRecord::Schema.define(version: 20160404104614) do
   add_index "ahoy_events", ["user_id", "name"], name: "index_ahoy_events_on_user_id_and_name", using: :btree
   add_index "ahoy_events", ["visit_id", "name"], name: "index_ahoy_events_on_visit_id_and_name", using: :btree
 
+  create_table "panoplies", force: :cascade do |t|
+    t.integer "quantity"
+    t.integer "product_id"
+    t.integer "product_id_2"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
     t.string   "website"
     t.integer  "total_sales"
-    t.decimal  "price",       precision: 5, scale: 2
+    t.decimal  "price",       precision: 6, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "sales", force: :cascade do |t|
     t.integer "quantity"
-    t.decimal "price",      precision: 5, scale: 2
+    t.decimal "price",      precision: 6, scale: 2
     t.integer "ticket_id"
     t.integer "product_id"
   end
@@ -48,7 +54,8 @@ ActiveRecord::Schema.define(version: 20160404104614) do
   create_table "tickets", force: :cascade do |t|
     t.integer  "quantity"
     t.datetime "date"
-    t.decimal  "total_worth", precision: 5, scale: 2
+    t.decimal  "total_worth", precision: 7, scale: 2
+    t.string   "code"
   end
 
   create_table "visits", force: :cascade do |t|
