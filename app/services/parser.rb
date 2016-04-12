@@ -1,10 +1,18 @@
 class Parser
 
+  attr_reader :logger
+
   def initialize(file)
+    @logger = Logger.new(Rails.root.join('log','prices_import.log'))
     ## Open a .txt file and extrapolate the data creating Products, Sales and Tickets
-    IO.readlines(file.path).each do |sale|
+    logger.info{"Starting to read #{File.basename(file)}..."}
+    IO.readlines(file.path).each_with_index do |sale, index|
+      if index % 5000 == 0
+        logger.info{"Reading line \##{index}"}
+      end
       check_for_regex(sale.scrub)
     end
+    logger.info{"Finished without errors, FuckYEAH!"}
   end
 
   private
@@ -21,11 +29,6 @@ class Parser
     end
 
     def create_sale_and_product(match, copy_control = false)
-      ## Creates a sale for each line of the file. Every sale group to a Ticket. Each ticket is created
-      ## when the current sale and the one before have different date and id.
-
-      @old_sale_id ||= 0
-      @old_sale_time ||= DateTime.now
 
       ## This two variables will be used to check whether if the sale belongs to the same ticket as the
       ## last one, without storing useless informations forever.
@@ -62,15 +65,15 @@ class Parser
       ## If a product with the code already exists it just updates it, otherwise new product.
       ## Then adds product_id to the new sale hash
 
-      if match[5] == @old_sale_id and date == @old_sale_time
-        ticket = Ticket.last
+      if ticket = Ticket.find_by_code_and_date(match[5], date)
         ticket.increment!(:quantity, quantity)
         ticket.increment!(:total_worth, price_to_decimal * quantity)
       else
         ticket = Ticket.create({
                                 quantity: quantity,
                                 total_worth: price_to_decimal * quantity,
-                                date: date
+                                date: date,
+                                code: match[5],
                               })
       end
 
@@ -82,11 +85,6 @@ class Parser
       Sale.create(new_sale_hash)
 
       ## Finally creates a new sale
-
-      @old_sale_id = match[5]
-      @old_sale_time = date
-
-      ## Keep track of new or old tickets
 
     end
 end
