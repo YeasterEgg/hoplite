@@ -5,7 +5,11 @@ class Parser
   def initialize(file)
     @logger = Logger.new(Rails.root.join('log','prices_import.log'))
     ## Open a .txt file and extrapolate the data creating Products, Sales and Tickets
-    logger.info{"Starting to read #{File.basename(file)}..."}
+    if file.try :original_filename
+      logger.info{"Starting to read #{file.original_filename}..."}
+    else
+      logger.info{"Starting to read #{File.basename(file)}..."}
+    end
     IO.readlines(file.path).each_with_index do |sale, index|
       if index % 5000 == 0
         logger.info{"Reading line \##{index}"}
