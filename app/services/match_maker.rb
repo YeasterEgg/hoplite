@@ -1,9 +1,14 @@
 class MatchMaker
 
+  attr_reader :logger
+
   def initialize(date = Ticket.first[:date])
+    @logger = Logger.new(Rails.root.join('log','match_maker.log'))
+    logger.info{"Started parsing for Panoplies, from date: #{date.strftime('%d/%m/%y')}"}
     Ticket.where("date >= :start_date", {start_date: date}).each do |ticket|
       cycle_panoplie(ticket.products.sort_by(&:id))
     end
+    logger.info{"What can I say? It was great, till next time!"}
   end
 
   private
@@ -18,8 +23,8 @@ class MatchMaker
         else
           Panoplie.create(
                           quantity: 1,
-                          product_id_1: first[:id],
-                          product_id_2: product[:id]
+                          product_id_1: first,
+                          product_id_2: product
                           )
         end
       end

@@ -3,12 +3,24 @@ class ProductDecorator < ApplicationDecorator
   delegate :current_page, :total_pages, :limit_value
 
   def hashed_pairs
-    top_pairs.map!{ |array| array = {
-                                      product: Product.find(array.first).code,
-                                      sales: array.second,
-                                      total_worth: array.second * (object[:price] + Product.find(array.first)[:price])
-                                    }
-    }
+    hashed_pairs = []
+    panoplies_product_1.each do |panoplie|
+      product_2 = Product.find(panoplie[:product_id_2])
+      hashed_pairs << {
+                    product: product_2[:code],
+                    sales: panoplie[:quantity],
+                    total_worth: panoplie[:quantity] * (object[:price] + product_2[:price])
+                    }
+    end
+    panoplies_product_2.each do |panoplie|
+      product_2 = Product.find(panoplie[:product_id_1])
+      hashed_pairs << {
+                    product: product_2[:code],
+                    sales: panoplie[:quantity],
+                    total_worth: panoplie[:quantity] * (object[:price] + product_2[:price])
+                    }
+    end
+    hashed_pairs.sort_by{|pair| pair[:sales]}.reverse
   end
 
   def husband_product
