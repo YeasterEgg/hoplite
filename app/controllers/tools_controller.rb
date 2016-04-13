@@ -6,6 +6,7 @@ class ToolsController < ApplicationController
     Ticket.destroy_all
     Visit.destroy_all
     Ahoy::Event.destroy_all
+    Panoplie.destroy_all
     redirect_to products_path
   end
 
@@ -15,6 +16,15 @@ class ToolsController < ApplicationController
 
   def onan
     file = File.new(Rails.root.join('public', 'seed.txt'))
+    date = Ticket.last[:date].at_midnight + 1.day
+    Parser.new(file)
+    date ||= Ticket.first[:date].at_midnight
+    MatchMaker.new(ticket[:date])
+    redirect_to products_path
+  end
+
+  def upload_file
+    file = params[:sales_file]
     Parser.new(file)
     redirect_to products_path
   end

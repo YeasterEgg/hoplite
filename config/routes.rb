@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root 'products#index'
   resources :products, param: :code, only: [:index, :show]
 
-  post 'sales/upload_file', to: 'sales#upload_file', as: 'upload_sales_file'
+  post 'upload_file', to: 'tools#upload_file', as: 'upload_sales_file'
   get 'products/:code/graph_data', to: 'products#graph_data', defaults: { format: 'json' }, as: 'plot_graphs'
 
   get 'some_data', to: 'tickets#show_data', as: 'show_real_data'
