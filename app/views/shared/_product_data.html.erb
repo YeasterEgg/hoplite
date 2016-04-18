@@ -31,7 +31,7 @@
         <td><%= pair[:sales] %></td>
         <td><%= nice_percentual(pair[:sales].to_f / @product[:total_sales]) %></td>
         <td><%= nice_price(pair[:total_worth]) %></td>
-        <td><%= pair[:real_probable_ratio].round(2) %></td>
+        <td class = 'real_probable_ratio'><%= pair[:real_probable_ratio].round(2) %></td>
       </tr>
     <% end %>
   </tbody>

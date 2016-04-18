@@ -1,6 +1,12 @@
 $(document).ready(function(){
+  var ratioThresholdValue = 5; // This var sets the threshold over which the ratio will be highlighted, default is 5
   $('.comic').on('click',function(){
     event.preventDefault();
     alert('con la dovuta calma');
-  })
+  });
+  $('.real_probable_ratio').each(function(index){
+    if($('.real_probable_ratio')[index].innerHTML > ratioThresholdValue){
+      $(this).addClass('red_text');
+    };
+  });
 })
