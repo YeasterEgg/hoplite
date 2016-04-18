@@ -6,7 +6,8 @@
 
 <table class="product_data">
   <colgroup>
-    <col style="width: 40%;">
+    <col style="width: 30%;">
+    <col style="width: 10%;">
     <col style="width: 15%;">
     <col style="width: 15%;">
     <col style="width: 15%;">
@@ -19,6 +20,7 @@
       <th>Vendite complementari</th>
       <th>Percentuale sul totale vendite</th>
       <th>Valore vendite combinate</th>
+      <th>Rapporto Vendite Reali vs Previste</th>
     </tr>
   </thead>
   <tbody>
@@ -29,6 +31,7 @@
         <td><%= pair[:sales] %></td>
         <td><%= nice_percentual(pair[:sales].to_f / @product[:total_sales]) %></td>
         <td><%= nice_price(pair[:total_worth]) %></td>
+        <td><%= real_probable_ratio.round(2) %></td>
       </tr>
     <% end %>
   </tbody>

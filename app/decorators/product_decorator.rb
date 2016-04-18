@@ -9,7 +9,8 @@ class ProductDecorator < ApplicationDecorator
       hashed_pairs << {
                     product: product_2[:code],
                     sales: panoplie[:quantity],
-                    total_worth: panoplie[:quantity] * (object[:price] + product_2[:price])
+                    total_worth: panoplie[:quantity] * (object[:price] + product_2[:price]),
+                    real_probable_ratio: panoplie[:quantity].fdiv(probable_sales(product_2)),
                     }
     end
     panoplies_product_2.each do |panoplie|
@@ -17,7 +18,8 @@ class ProductDecorator < ApplicationDecorator
       hashed_pairs << {
                     product: product_2[:code],
                     sales: panoplie[:quantity],
-                    total_worth: panoplie[:quantity] * (object[:price] + product_2[:price])
+                    total_worth: panoplie[:quantity] * (object[:price] + product_2[:price]),
+                    real_probable_ratio: panoplie[:quantity].fdiv(probable_sales(product_2)),
                     }
     end
     hashed_pairs.sort_by{|pair| pair[:sales]}.reverse
@@ -80,6 +82,16 @@ class ProductDecorator < ApplicationDecorator
         counted_tickets["#{ticket} quantità"] += 1
       end
       counted_tickets.to_a
+    end
+
+    def probable_sales(product)
+      ## The predicted number of sales between two products A and B where Pa is the probability that a ticket
+      ## contains product A and Pb is the same for product B.
+      ## Since the probability that a ticket contains both A and B is Pa * Pb and Px is the ratio between
+      ## tickets with product X and all tickets, the formula for measuring how many times A and B would be sold
+      ## together if covariance == 0 is Pa * Pb * total_tickets.
+      ## We can simplify and obtain the following formula.
+      (object.tickets.uniq.size * product.tickets.uniq.size).fdiv(Ticket.all.size)
     end
 
 end
