@@ -9,9 +9,5 @@ Rails.application.routes.draw do
   get 'some_data', to: 'tickets#show_data', as: 'show_real_data'
 
   get 'cthulhu', to: 'tools#destroy_all', as: 'cthulhu'
-
-  get 'guests', to: 'tools#ahoy_mates', as: 'ahoy_mates'
-
-  get 'onan', to: 'tools#onan', as: 'onan'
-
+  get 'logz', to: 'tools#show_logger', as: 'logs'
 end

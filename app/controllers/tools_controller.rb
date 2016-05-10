@@ -4,22 +4,7 @@ class ToolsController < ApplicationController
     Sale.destroy_all
     Product.destroy_all
     Ticket.destroy_all
-    Visit.destroy_all
-    Ahoy::Event.destroy_all
     Panoplie.destroy_all
-    redirect_to products_path
-  end
-
-  def ahoy_mates
-    @all_guests = Visit.all
-  end
-
-  def onan
-    file = File.new(Rails.root.join('public', 'seed.txt'))
-    date = Ticket.last[:date].at_midnight + 1.day
-    Parser.new(file)
-    date ||= Ticket.first[:date].at_midnight
-    MatchMaker.new(ticket[:date])
     redirect_to products_path
   end
 
@@ -27,6 +12,10 @@ class ToolsController < ApplicationController
     file = params[:sales_file]
     Parser.new(file)
     redirect_to products_path
+  end
+
+  def show_logger
+    @file = Rails.root.join('log','match_maker.log')
   end
 
 end

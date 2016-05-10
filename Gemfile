@@ -14,8 +14,8 @@ gem "ransack", github: "activerecord-hackery/ransack"
 gem "will_paginate"
 gem "rails_12factor"
 gem "awesome_print"
-gem "ahoy_matey"
 gem 'draper', '~> 1.3'
+gem 'whenever', require: false
 
 group :development, :test, :production do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
@@ -28,4 +28,3 @@ group :development do
   gem "web-console", "~> 2.0"
   gem "spring"
 end
-

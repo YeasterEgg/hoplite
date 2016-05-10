@@ -5,6 +5,7 @@ class CreateTickets < ActiveRecord::Migration
       t.datetime :date
       t.decimal :total_worth, precision: 7, scale: 2
       t.string :code
+      t.boolean :read, default: false
     end
   end
 end
