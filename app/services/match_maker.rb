@@ -25,7 +25,7 @@ class MatchMaker
       cycle_panoplie(ticket.products.uniq(&:id).sort_by(&:id))
       ## For each tickets selects every single product (uniq by id), then it sorts by ID.
 
-      ticket[:read] = true
+      ticket.update_attribute(:read, true)
       ## If the call to the next methods goes well it will update the status of the ticket.
 
     end
