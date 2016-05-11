@@ -15,7 +15,16 @@ class ToolsController < ApplicationController
   end
 
   def show_logger
-    @file = Rails.root.join('log','match_maker.log')
+    @logs = Dir.glob("#{Rails.root}/log/*").map{|file| file.split('/').last }
   end
 
+  def log_to_ajax
+    file_name = params[:file]
+    file = File.read(Rails.root.join('log',file_name+'.log'))
+    if file
+      render text: file
+    else
+      redirect_to :root
+    end
+  end
 end

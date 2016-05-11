@@ -10,4 +10,5 @@ Rails.application.routes.draw do
 
   get 'cthulhu', to: 'tools#destroy_all', as: 'cthulhu'
   get 'logz', to: 'tools#show_logger', as: 'logs'
+  get 'logs/:file', to: 'tools#log_to_ajax', as: 'ajax_logs'
 end

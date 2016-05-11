@@ -22,19 +22,12 @@ class MatchMaker
     Ticket.unread.each do |ticket|
       ## Only selects unread tickets.
 
-      if cycle_panoplie(ticket.products.uniq{|product| product[:id]}).sort_by(&:id)
-        ## For each tickets selects every single product (uniq by id), then it sorts by ID.
+      cycle_panoplie(ticket.products.uniq(&:id).sort_by(&:id))
+      ## For each tickets selects every single product (uniq by id), then it sorts by ID.
 
-        ticket[:read] = true
-        ## If the call to the next methods goes well it will update the status of the ticket.
+      ticket[:read] = true
+      ## If the call to the next methods goes well it will update the status of the ticket.
 
-      else
-        logger.error{"Something went horribly, horribly wrong with ticket #{ticket[:id]}..."}
-        logger.info{"----    ----    ----    ----    ----    ----    ----    ----"}
-        return
-        ## If it doesn't, the cycle exits and logs the last ticket analyzed.
-
-      end
     end
     time_end = Time.zone.now
     time_each_ticket = (time_end - time_start).fdiv(length)

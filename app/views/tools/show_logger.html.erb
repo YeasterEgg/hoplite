@@ -1,3 +1,7 @@
+<div style='text-align: center;'>
+  <h1>Logs</h1>
+  <%= select_tag :logs, options_for_select(@logs.collect {|log| [ log[0...-4], "logs/"+log ] }), include_blank: true %>
+</div>
 <pre>
-  <%= render file: @file %>
+  <div id='log'></div>
 </pre>
