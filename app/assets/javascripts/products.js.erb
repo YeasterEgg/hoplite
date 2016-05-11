@@ -1,4 +1,8 @@
-$(document).ready(function(){
+$(document).on('page:load',redThreshold);
+
+$(document).ready(redThreshold);
+
+function redThreshold(){
   var ratioThresholdValue = 5; // This var sets the threshold over which the ratio will be highlighted, default is 5
   $('.comic').on('click',function(){
     event.preventDefault();
