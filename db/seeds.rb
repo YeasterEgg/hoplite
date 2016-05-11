@@ -5,3 +5,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+helps_yaml = YAML.load_file(Rails.root.join('config','locales','help.yml'))
+helps_yaml.map{|help| Help.create(title: help.first, text: help.second['text'])}

@@ -1,0 +1,19 @@
+<div style='text-align: center;'>
+  <h1>McGyver</h1>
+</div>
+
+<div class='form', style='text-align: center;'>
+  <%= form_for @help, url: create_help_path, method: 'post' do |f| %>
+    <div class="field">
+      <%= f.label :title, 'Titolo' %><br>
+      <%= f.text_field :title %>
+    </div>
+    <div class="field">
+      <%= f.label :text, 'Testo' %><br>
+      <%= f.text_area :text %>
+    </div>
+    <div class="actions">
+      <%= f.submit 'Invia' %>
+    </div>
+  <% end %>
+</div>

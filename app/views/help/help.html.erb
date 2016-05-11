@@ -1,0 +1,13 @@
+<div style='text-align: center;'>
+  <h1>HelpMe!</h1>
+  <%= select_tag :helps, options_for_select(@helps.map{|help| [ help[:title], "help/#{help[:id]}" ] }), include_blank: true, class: :selector_for_text %>
+</div>
+
+<% if Rails.env.development? or params[:override] == 'ohyeah'  %>
+  <%= link_to 'Cancella', '#', id: 'delete_help' %>
+<% end %>
+<pre>
+  <p id='white_paper', style='white-space: pre-wrap'></p>
+</pre>
+
+<div class = 'text'> </div>

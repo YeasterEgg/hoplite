@@ -16,6 +16,7 @@ gem "rails_12factor"
 gem "awesome_print"
 gem 'draper', '~> 1.3'
 gem 'whenever', require: false
+gem "font-awesome-rails"
 
 group :development, :test, :production do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console

@@ -20,11 +20,11 @@ class ToolsController < ApplicationController
 
   def log_to_ajax
     file_name = params[:file]
-    file = File.read(Rails.root.join('log',file_name+'.log'))
+    file = File.read(Rails.root.join('log',"#{file_name}.log"))
     if file
       render text: file
     else
-      redirect_to :root
+      redirect_to :back
     end
   end
 end
