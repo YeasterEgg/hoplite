@@ -2,6 +2,7 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :graph_data]
 
   def index
+    @background = Dir.glob(Rails.root.join('app','assets','images','rndm','*')).map{|path| path.split('/').last}.sample
     params[:q] ||= {}
     params[:page] ||= 1
     @search = Product.ransack(params[:q])

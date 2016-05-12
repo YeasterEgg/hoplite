@@ -15,7 +15,7 @@ class ToolsController < ApplicationController
   end
 
   def show_logger
-    @logs = Dir.glob("#{Rails.root}/log/*").map{|file| file.split('/').last }
+    @logs = Dir.glob(Rails.root.join('log','*')).map{|path| path.split('/').last}
   end
 
   def log_to_ajax
@@ -27,4 +27,9 @@ class ToolsController < ApplicationController
       redirect_to :back
     end
   end
+
+  def random_pics
+    render json: Dir.glob(Rails.root.join('app','assets','images','rndm','*')).map{|path| path.split('/').last}.to_json
+  end
+
 end
