@@ -2,6 +2,10 @@ h1 {
   text-align: center;
 }
 
+.wrap {
+  z-index: 2;
+}
+
 #product_details {
   text-align: center;
 }
@@ -32,6 +36,20 @@ h1 {
   color: red;
   font-weight: bolder;
 }
+
+.surprise {
+  background-image: image-url("cat.jpeg");
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 1;
+  width: 100%;
+  z-index: 1;
+}
+
 
 // Pagination
 

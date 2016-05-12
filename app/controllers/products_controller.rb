@@ -22,7 +22,7 @@ class ProductsController < ApplicationController
     if @product[:name].nil?
       ProductFinder.new(@product)
     end
-    @hashed_pairs = @product.hashed_pairs
+    @hashed_pairs = @product.hashed_pairs.first(20)
   end
 
   def graph_data

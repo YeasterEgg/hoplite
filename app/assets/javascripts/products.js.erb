@@ -1,16 +1,30 @@
-$(document).on('page:load',redThreshold);
+$(document).on('page:load',productJS);
 
-$(document).ready(redThreshold);
+$(document).ready(productJS);
 
-function redThreshold(){
+function productJS(){
+
+  surpriseClick($('.comic'), $('.surprise'), $('.wrap'))
+
   var ratioThresholdValue = 5; // This var sets the threshold over which the ratio will be highlighted, default is 5
-  $('.comic').on('click',function(){
-    event.preventDefault();
-    alert('con la dovuta calma');
-  });
+
   $('.real_probable_ratio').each(function(index){
     if($('.real_probable_ratio')[index].innerHTML > ratioThresholdValue){
       $(this).addClass('red_text');
     };
   });
 }
+
+function surpriseClick(button,overlay,normalDisplay){
+  button.on('click', function(){
+    console.log('MIAO!');
+    overlay.fadeIn(1000);
+    normalDisplay.fadeOut(1000);
+  })
+  overlay.on('click',function(){
+    overlay.fadeOut(1000);
+    normalDisplay.fadeIn(1000);
+    console.log('CIAO!');
+  })
+}
+
