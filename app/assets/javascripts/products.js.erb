@@ -16,6 +16,10 @@ function productJS(){
 }
 
 function surpriseClick(button,overlay,normalDisplay){
+  var width = $(document).width();
+  var height = width * 3 / 4;
+  overlay.css('width', width);
+  overlay.css('height', height);
   button.on('click', function(){
     console.log('MIAO!');
     overlay.fadeIn(1000);
