@@ -1,22 +1,28 @@
 class Parser
 
   attr_reader :logger
+  LOGFILE = 'prices_import.log'
 
-  def initialize(file)
-    @logger = Logger.new(Rails.root.join('log','prices_import.log'))
+  def initialize(file, log = LOGFILE)
+    @logger = File.new(Rails.root.join('log',log), 'a')
     ## Open a .txt file and extrapolate the data creating Products, Sales and Tickets
+    right_now = Time.now
+    logger.puts(" - @ #{right_now.strftime('%H:%M')}")
     if file.try :original_filename
-      logger.info{"Starting to read #{file.original_filename}..."}
+      logger.puts("#{right_now.strftime('%d/%m/%y')} - Starting to read #{file.original_filename} @ #{right_now.strftime('%H:%M')}...")
     else
-      logger.info{"Starting to read #{File.basename(file)}..."}
+      logger.puts("#{right_now.strftime('%d/%m/%y')} - Starting to read #{File.basename(file)} @ #{right_now.strftime('%H:%M')}...")
     end
     IO.readlines(file.path).each_with_index do |sale, index|
       if index % 5000 == 0
-        logger.info{"Reading line \##{index}"}
+        logger.puts("Reading line \##{index}")
       end
       check_for_regex(sale.scrub)
     end
-    logger.info{"Finished without errors, FuckYEAH!"}
+    right_now = Time.now
+    logger.puts("Finished without errors @ #{right_now.strftime('%H:%M')}, FuckYEAH!")
+    logger.puts("----    ----    ----    ----    ----    ----    ----    ----")
+    logger.close
   end
 
   private

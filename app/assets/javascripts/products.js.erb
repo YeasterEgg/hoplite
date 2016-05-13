@@ -1,49 +1,24 @@
-$(document).on('page:load',productJS);
+$(document).on('page:load',productStyles);
 
-$(document).ready(productJS);
+$(document).ready(productStyles);
 
-function productJS(){
 
-  surpriseClick($('.comic'), $('.surprise'), $('.wrap'))
-
-  var ratioThresholdValue = 5; // This var sets the threshold over which the ratio will be highlighted, default is 5
-
-  $('.real_probable_ratio').each(function(index){ // If the ratio is above the threshold, it is highlighted in red
-    if($('.real_probable_ratio')[index].innerHTML > ratioThresholdValue){
-      $(this).addClass('red_text');
-    };
-  });
+function addClassIfOver(cells,threshold,className){
+  $.each(cells,function(index,value){
+    if(value.innerHTML > threshold){
+      $(value).addClass(className)
+    }
+  })
 }
 
 function surpriseClick(button,overlay,normalDisplay){
-
-  // First thing is an ajax call to get the array of the possible pics
-
-  // $.ajax({
-  //         type: "GET",
-  //         url: '/random_pics',
-  //         contentType: "application/json; charset=utf-8",
-  //         dataType: 'json',
-  //         success: function (data) {
-  //           console.log(data);
-  //           var backgroundImage = data[Math.floor(Math.random() * data.length)];
-  //           console.log(backgroundImage);
-  //           setBackground(backgroundImage);
-  //         },
-  //         error: function (result) {
-  //           console.log(result);
-  //         },
-  // })
-
   // First thing, it sets the
   function setBackground(){
     var height = $(window).height();
     var width = height * 4 / 3;
     overlay.css('width', width * 0.8);
     overlay.css('height', height * 0.8);
-    // overlay.css('background-image', 'url(assets/rndm/' + image + ')');
   }
-
   button.on('click', function(){
     setBackground();
     console.log('MIAO!');
@@ -55,5 +30,23 @@ function surpriseClick(button,overlay,normalDisplay){
     normalDisplay.fadeIn(1000);
     console.log('CIAO!');
   })
+}
+
+function alternateColorTable(table,color1,color2){
+  $.each(table, function(index,value){
+    if(index % 2 == 0 ){
+      $(value).css('background',color1)
+    }else{
+      $(value).css('background',color2)
+    }
+  })
+}
+
+// The function that starts everything
+
+function productStyles(){
+  surpriseClick($('.comic'), $('.surprise'), $('.wrap'));
+  addClassIfOver($('.real_probable_ratio'),5,'red_text');
+  alternateColorTable($('.product_row'),'#f0f0f0','#fbfbfb');
 }
 

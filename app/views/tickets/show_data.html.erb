@@ -1,4 +1,3 @@
-
 <h2 id='ticket_size_title'>Dimensioni scontrini</h2>
 <ul id='tickets_size'>
 <% @sales_quantities.each do |sale| %>
@@ -10,3 +9,4 @@
 <li><%= "Valore totale vendite: #{nice_price(@total_worth)}" %></li>
 <li><%= "Numero totale vendite: #{@total_quantity.to_s}" %></li>
 <li><%= "Valore medio vendite: #{nice_price(@average_sale)}" %></li>
+

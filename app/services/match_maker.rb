@@ -1,22 +1,23 @@
 class MatchMaker
 
   attr_reader :logger
+  LOGFILE = 'match_maker.log'
 
   ## The real deal: this class is the hearth of the webapp, it looks for couples of products sold togheter and
   ## creates the Panoplie object relative to those products.
   ## VERY IMPORTANT: When a Panoplie instance is created, the first product (product_id_1) will ALWAYS have the
   ## lowest ID between the two, to shorten research.
 
-  def initialize()
-    @logger = Logger.new(Rails.root.join('log','match_maker.log'))
+  def initialize( log = LOGFILE )
+    @logger = File.new(Rails.root.join('log', log ), 'a')
     ## Creates the log file
 
-    time_start = Time.zone.now
+    time_start = Time.now
     length = Ticket.unread.size
     ## This is just to keep track of how long it takes to analyze.
 
-    logger.info{"Started parsing for Panoplies at: #{time_start.strftime('%d/%m/%y')}"}
-    logger.info{"There are #{length} new tickets to check, it's going to be a long night..."}
+    logger.puts("Started parsing for Panoplies at: #{time_start.strftime('%H:%M')}")
+    logger.puts("There are #{length} new tickets to check, it's going to be a long night...")
     ## Every time it runs, it will write 5 lines in the logger.
 
     Ticket.unread.each do |ticket|
@@ -29,12 +30,13 @@ class MatchMaker
       ## If the call to the next methods goes well it will update the status of the ticket.
 
     end
-    time_end = Time.zone.now
+    time_end = Time.now
     time_each_ticket = (time_end - time_start).fdiv(length)
     ## Again, just to keep track of the speed.
 
-    logger.info{"Finally! It's #{time_end.strftime('%d/%m/%y')} and it took me around #{time_each_ticket} seconds each Ticket."}
-    logger.info{"----    ----    ----    ----    ----    ----    ----    ----"}
+    logger.puts("Finally! It's #{time_end.strftime('%H:%M')} and it took me around #{time_each_ticket.round(4)} seconds each Ticket.")
+    logger.puts("----    ----    ----    ----    ----    ----    ----    ----")
+    logger.close
   end
 
   private
