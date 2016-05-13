@@ -4,7 +4,7 @@ class Parser
   LOGFILE = 'prices_import.log'
 
   def initialize(file, log = LOGFILE)
-    @logger = File.new(Rails.root.join('log',log), 'a')
+    @logger = File.new(Rails.root.join('public','log',log), 'a')
     ## Open a .txt file and extrapolate the data creating Products, Sales and Tickets
     right_now = Time.now
     logger.puts(" - @ #{right_now.strftime('%H:%M')}")

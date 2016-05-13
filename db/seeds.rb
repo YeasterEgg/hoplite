@@ -1,5 +1,5 @@
 ## Removes old logs
-Dir.glob(Rails.root.join('log','*')).map{|logfile| File.delete(logfile)}
+Dir.glob(Rails.root.join('public','log','*')).map{|logfile| File.delete(logfile)}
 
 ## Creates basicInfo
 helps_yaml = YAML.load_file(Rails.root.join('config','locales','help.yml'))

@@ -12362,17 +12362,32 @@ return jQuery;
 }).call(this);
 google.charts.load('current', {'packages':['corechart']});
 
-$(document).on('page:load',callbackForGoogle);
+$(document).on('page:load',postponedFunctions);
+$(document).ready(postponedFunctions);
 
-$(document).ready(callbackForGoogle);
+function postponedFunctions(){
 
-function callbackForGoogle(){
-  if ($('#product_details').length > 0)
-    google.charts.setOnLoadCallback(ajaxCall);
+  // Text rendering functions
+  catchDropdown($('.selector_for_text'), $('#white_paper'), 5);
+  deleteText($('.selector_for_text'), $('#delete_text'));
+  showData($('#ticket_size_title'), $('#tickets_size'), 666)
+
+  // Google Plot functions
+  callbackForGoogle($('#product_details')) // It actually causes a fallback on itself
+
+  // Product Pages (index and show) functions
+  surpriseClick($('.comic'), $('.surprise'), $('.wrap'));
+  addClassIfOver($('.real_probable_ratio'),5,'red_text');
+  alternateColorTable($('.product_row'),'#d0d0d0','#f0f0f0');
+}
+;
+function callbackForGoogle(validatorElement){
+  if (validatorElement.length > 0)
+    google.charts.setOnLoadCallback(ajaxCall(validatorElement));
 };
 
-function ajaxCall(){
-	var productCode = $('#product_details').data('code');
+function ajaxCall(validatorElement){
+	var productCode = validatorElement.data('code');
 	$.ajax({
           type: "GET",
           contentType: "application/json; charset=utf-8",
@@ -12380,7 +12395,7 @@ function ajaxCall(){
           dataType: 'json',
           data: "",
           success: function (data) {
-            drawCharts(data);
+            drawCharts(data, $('#histogram_container'), $('#pie_container'), $('#scatter_container'));
         	},
           error: function (result) {
               alert(result)
@@ -12389,7 +12404,7 @@ function ajaxCall(){
 };
 
 
-function drawCharts(ajaxData) {
+function drawCharts(ajaxData, histogramElement, pieElement, scatterElement) {
   var histogramData = google.visualization.arrayToDataTable(ajaxData[0]);
   var pieChartData = google.visualization.arrayToDataTable(ajaxData[1]);
   var scatterPlotData = google.visualization.arrayToDataTable(ajaxData[2]);
@@ -12432,20 +12447,130 @@ function drawCharts(ajaxData) {
     },
   };
 
-  var histogram = new google.visualization.ColumnChart(document.getElementById('histogram_container'));
-  var pieChart = new google.visualization.PieChart(document.getElementById('pie_container'));
-  var scatterPlot = new google.visualization.ScatterChart(document.getElementById('scatter_container'));
+  var histogram = new google.visualization.ColumnChart(histogramElement);
+  var pieChart = new google.visualization.PieChart(pieElement);
+  var scatterPlot = new google.visualization.ScatterChart(scatterElement);
 
   histogram.draw(histogramData, histogramOptions);
   pieChart.draw(pieChartData, pieChartOptions);
   scatterPlot.draw(scatterPlotData, scatterPlotOptions);
 };
-$(document).ready(function(){
-  $('.comic').on('click',function(){
-    event.preventDefault();
-    alert('con la dovuta calma');
+function addClassIfOver(cells,threshold,className){
+  $.each(cells,function(index,value){
+    if(value.innerHTML > threshold){
+      $(value).addClass(className)
+    }
   })
-})
+}
+
+function surpriseClick(button,overlay,normalDisplay){
+  // First thing, it sets the
+  function setBackground(){
+    var height = $(window).height();
+    var width = height * 4 / 3;
+    overlay.css('width', width * 0.8);
+    overlay.css('height', height * 0.8);
+  }
+  button.on('click', function(){
+    setBackground();
+    console.log('MIAO!');
+    overlay.fadeIn(1000);
+    normalDisplay.fadeOut(500);
+  })
+  overlay.on('click',function(){
+    overlay.fadeOut(500);
+    normalDisplay.fadeIn(1000);
+    console.log('CIAO!');
+  })
+}
+
+function alternateColorTable(table,color1,color2){
+  $.each(table, function(index,value){
+    if(index % 2 == 0 ){
+      $(value).css('background',color1)
+    }else{
+      $(value).css('background',color2)
+    }
+  })
+}
+;
+// Gets the choice from the dropdown and calls addTextByDelay with its Ajax response
+
+function catchDropdown(dropdownElement, writingSpaceElement, delay){
+  dropdownElement.on('change', function(){
+    $.ajax({
+            url : $(this).val(),
+            success : function(data){
+              writingSpaceElement.html('');
+              addTextByDelay (data,writingSpaceElement,delay);
+            }
+          });
+  });
+}
+
+// Display text in an alement one character at a time
+
+function addTextByDelay(text,element,delay){
+  if(!element){
+    element = $("body");
+  }
+  if(!delay){
+    delay = 300;
+  }
+  if(text.length >0){
+    element.append(text[0]);
+    setTimeout(
+      function(){
+        addTextByDelay(text.slice(1),element,delay);
+      },delay
+    );
+  }
+}
+
+// Allows to delete the selected element in the dropdown menu
+
+function deleteText(dropdownElement, buttonElement){
+  buttonElement.on('click', function(){
+    event.preventDefault;
+    $.ajax({
+      type: 'DELETE',
+      url: dropdownElement.val(),
+      success: function() {
+        window.location.reload(true);
+      }
+    });
+  })
+}
+
+// Display a list when clicking on title
+
+function showData(title, list, delay){
+  title.on('click', function(){
+    list.slideToggle(delay);
+  })
+}
+;
+function waiter() {
+  $.ajax({
+   type: 'GET',
+   url: 'work',
+   success: createSuccessHandler,
+   error: createErrorHandler,
+   complete: hideLoadingImage
+  });
+}
+
+function createSuccessHandler(data) {
+  alert("Data loaded!")
+}
+
+function createErrorHandler(data) {
+  alert("It failed, ffs!")
+}
+
+function hideLoadingImage() {
+  $('#loading').hide()
+}
 ;
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
@@ -12459,6 +12584,7 @@ $(document).ready(function(){
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
 
 
 

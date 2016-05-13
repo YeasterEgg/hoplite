@@ -4,7 +4,7 @@ class ProductFinder
   LOGFILE = 'product_finder.log'
 
   def initialize(product, logging = true, log = LOGFILE )
-    logger = File.new(Rails.root.join('log',log), 'a') if logging
+    logger = File.new(Rails.root.join('public','log',log), 'a') if logging
     right_now = Time.now
     logger.puts("#{right_now.strftime('%d/%m/%y')} - Somebody clicked on product #{product[:code]} @ #{right_now.strftime('%H:%M')}") if logging
     params = find_out_name(product,'http://www.decathlon.it', '/Comprare/', 'Prodotto Inattivo')
@@ -19,7 +19,7 @@ class ProductFinder
   end
 
   def self.nightshift(minutes = 15, log = LOGFILE)
-    logger = File.new(Rails.root.join('log',log), 'a')
+    logger = File.new(Rails.root.join('public','log',log), 'a')
     logger.puts("#{Time.now.strftime('%d/%m/%y')} - STARTING ProductFinder Nightshift!")
     starting_time = Time.now
     finishing_time = starting_time + minutes.minutes

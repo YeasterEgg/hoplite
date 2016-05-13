@@ -15,12 +15,12 @@ class ToolsController < ApplicationController
   end
 
   def show_logger
-    @logs = Dir.glob(Rails.root.join('log','*')).map{|path| path.split('/').last}
+    @logs = Dir.glob(Rails.root.join('public','log','*')).map{|path| path.split('/').last}
   end
 
   def log_to_ajax
     file_name = params[:file]
-    file = File.read(Rails.root.join('log',"#{file_name}.log"))
+    file = File.read(Rails.root.join('public','log',"#{file_name}.log"))
     if file
       render text: file
     else
@@ -40,7 +40,7 @@ class ToolsController < ApplicationController
 
   def delete_log
     log = "#{params[:file]}.log"
-    log_path = Rails.root.join('log',log)
+    log_path = Rails.root.join('public','log',log)
     File.delete(log_path) if File.exist?(log_path)
     render inline: "location.reload();"
   end

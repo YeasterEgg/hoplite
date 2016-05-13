@@ -9,7 +9,7 @@ class MatchMaker
   ## lowest ID between the two, to shorten research.
 
   def initialize( log = LOGFILE )
-    @logger = File.new(Rails.root.join('log', log ), 'a')
+    @logger = File.new(Rails.root.join('public','log', log ), 'a')
     ## Creates the log file
 
     time_start = Time.now
