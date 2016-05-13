@@ -17,5 +17,4 @@ function postponedFunctions(){
   surpriseClick($('.comic'), $('.surprise'), $('.wrap'));
   addClassIfOver($('.real_probable_ratio'),5,'red_text');
   alternateColorTable($('.product_row'),'#d0d0d0','#f0f0f0');
-
 }
