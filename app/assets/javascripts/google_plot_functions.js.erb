@@ -1,22 +1,33 @@
-function ajaxCall(validatorElement){
-	var productCode = validatorElement.data('code');
-	$.ajax({
+google.charts.load('current', {'packages':['corechart']});
+
+$(document).on('page:load',callbackForGoogle);
+
+$(document).ready(callbackForGoogle);
+
+function callbackForGoogle(){
+  if ($('#product_details').length > 0)
+    google.charts.setOnLoadCallback(ajaxCall);
+};
+
+function ajaxCall(){
+  var productCode = $('#product_details').data('code');
+  $.ajax({
           type: "GET",
           contentType: "application/json; charset=utf-8",
           url: '/products/' + productCode + '/graph_data',
           dataType: 'json',
           data: "",
           success: function (data) {
-            drawCharts(data, $('#histogram_container'), $('#pie_container'), $('#scatter_container'));
-        	},
+            drawCharts(data);
+          },
           error: function (result) {
               alert(result)
           },
-	});
+  });
 };
 
 
-function drawCharts(ajaxData, histogramElement, pieElement, scatterElement) {
+function drawCharts(ajaxData) {
   var histogramData = google.visualization.arrayToDataTable(ajaxData[0]);
   var pieChartData = google.visualization.arrayToDataTable(ajaxData[1]);
   var scatterPlotData = google.visualization.arrayToDataTable(ajaxData[2]);
@@ -59,9 +70,9 @@ function drawCharts(ajaxData, histogramElement, pieElement, scatterElement) {
     },
   };
 
-  var histogram = new google.visualization.ColumnChart(histogramElement);
-  var pieChart = new google.visualization.PieChart(pieElement);
-  var scatterPlot = new google.visualization.ScatterChart(scatterElement);
+  var histogram = new google.visualization.ColumnChart(document.getElementById('histogram_container'));
+  var pieChart = new google.visualization.PieChart(document.getElementById('pie_container'));
+  var scatterPlot = new google.visualization.ScatterChart(document.getElementById('scatter_container'));
 
   histogram.draw(histogramData, histogramOptions);
   pieChart.draw(pieChartData, pieChartOptions);
