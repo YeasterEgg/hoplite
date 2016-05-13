@@ -8,3 +8,6 @@
 
 helps_yaml = YAML.load_file(Rails.root.join('config','locales','help.yml'))
 helps_yaml.map{|help| Help.create(title: help.first, text: help.second['text'])}
+seed_file = File.new(Rails.root.join('public','seed.txt')
+Parser.new(seed_file)
+MatchMaker.new
