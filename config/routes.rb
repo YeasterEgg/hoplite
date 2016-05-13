@@ -1,20 +1,19 @@
 Rails.application.routes.draw do
 
-  ## Base routes
+  ## Product routes
   root 'products#index'
   resources :products, param: :code, only: [:index, :show]
-  post 'upload_file', to: 'tools#upload_file', as: 'upload_sales_file'
-
-  ## Ajax date routes
   get 'products/:code/graph_data', to: 'products#graph_data', defaults: { format: 'json' }, as: 'plot_graphs'
-  get 'some_data', to: 'tickets#show_data', as: 'show_real_data'
 
   ## Tools routes
   get 'cthulhu', to: 'tools#destroy_all', as: 'cthulhu'
-  get 'logz', to: 'tools#show_logger', as: 'logs'
+  get 'logs', to: 'tools#show_logger', as: 'logs'
   get 'logs/:file', to: 'tools#log_to_ajax', as: 'ajax_logs'
-  get 'random_pics', to: 'tools#random_pics', as: 'random_pics'
   get 'match_maker', to: 'tools#match_maker', as: 'compute_matches'
+  get 'product_finder', to: 'tools#product_finder', as: 'namefinder'
+  get 'some_data', to: 'tools#show_data', as: 'show_real_data'
+  post 'upload_file', to: 'tools#upload_file', as: 'upload_sales_file'
+  delete 'logs/:file', to: 'tools#delete_log', as: 'delete_log'
 
   ## Help routes
   get 'help', to: 'help#help', as: 'help'

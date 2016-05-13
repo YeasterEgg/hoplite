@@ -1,8 +1,3 @@
-$(document).on('page:load',productStyles);
-
-$(document).ready(productStyles);
-
-
 function addClassIfOver(cells,threshold,className){
   $.each(cells,function(index,value){
     if(value.innerHTML > threshold){
@@ -41,12 +36,3 @@ function alternateColorTable(table,color1,color2){
     }
   })
 }
-
-// The function that starts everything
-
-function productStyles(){
-  surpriseClick($('.comic'), $('.surprise'), $('.wrap'));
-  addClassIfOver($('.real_probable_ratio'),5,'red_text');
-  alternateColorTable($('.product_row'),'#f0f0f0','#fbfbfb');
-}
-

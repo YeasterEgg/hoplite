@@ -1,19 +1,37 @@
 <div class='navbar_buttons'>
-  <div class="link_symbol">
-    <%= link_to compute_matches_path do %>
-      <i class="fa fa-link fa-2x"></i>
+  <div class="symbol left top">
+    <%= link_to compute_matches_path, data: { confirm: "Potrebbe richiedere parecchio tempo, sei sicuro/a?" } do %>
+      <i class="fa fa-link fa-2x" aria-hidden="true"></i>
     <% end %>
     <div class='popup'>
-      Clicca per cercare ORA le Panoplie per nuovi scontrini aggiunti.
+      Clicca per cercare le Panoplie per nuovi scontrini aggiunti.
     </div>
   </div>
 
-  <div class="help_symbol">
+  <div class="symbol right top">
     <div class='popup'>
-      Clicca per accedere alle INFO.
+      Clicca per accedere alla pagina delle Info.
     </div>
     <%= link_to help_path do %>
-      <i class="fa fa-info-circle fa-2x"></i>
+      <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
     <% end %>
+  </div>
+
+  <div class="symbol right bottom">
+    <div class='popup'>
+      Clicca per accedere ai logfiles.
+    </div>
+    <%= link_to logs_path do %>
+      <i class="fa fa-file-text-o fa-2x" aria-hidden="true"></i>
+    <% end %>
+  </div>
+
+  <div class="symbol left bottom">
+    <%= link_to namefinder_path, data: { confirm: "Il tutto richiederà circa 10 minuti, sei sicuro/a?" } do %>
+      <i class="fa fa-cloud-download fa-2x" aria-hidden="true"></i>
+    <% end %>
+    <div class='popup'>
+      Clicca per ricercare nomi per i prossimi 10 minuti.
+    </div>
   </div>
 </div>

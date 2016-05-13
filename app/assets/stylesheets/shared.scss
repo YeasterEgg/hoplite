@@ -72,16 +72,18 @@ body {
 .navbar_buttons {
   position: absolute;
 
-  .help_symbol {
+  a:hover{
+
+  }
+
+  .symbol {
     position: fixed;
-    top: 5px;
-    right: 10px;
 
     .popup {
       display: none;
     }
 
-    &:hover .popup {
+    &:hover .popup{
       display: inline-block;
       z-index: 2;
       border: 1px solid black;
@@ -90,21 +92,19 @@ body {
     }
   }
 
-  .link_symbol {
-    position: fixed;
+  .top {
     top: 5px;
+  }
+
+  .bottom {
+    top: 30px;
+  }
+
+  .right {
+    right: 10px;
+  }
+
+  .left {
     left: 10px;
-
-    .popup {
-      display: none;
-    }
-
-    &:hover .popup {
-      display: inline-block;
-      z-index: 2;
-      border: 1px solid black;
-      background-color: #d0d0d0;
-      padding: 10px;
-    }
   }
 }

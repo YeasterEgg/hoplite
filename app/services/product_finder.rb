@@ -3,7 +3,7 @@ class ProductFinder
   CLASS_NAME = Product
   LOGFILE = 'product_finder.log'
 
-  def initialize(product, log = LOGFILE, logging = true)
+  def initialize(product, logging = true, log = LOGFILE )
     logger = File.new(Rails.root.join('log',log), 'a') if logging
     right_now = Time.now
     logger.puts("#{right_now.strftime('%d/%m/%y')} - Somebody clicked on product #{product[:code]} @ #{right_now.strftime('%H:%M')}") if logging
@@ -30,7 +30,7 @@ class ProductFinder
     while Time.now < finishing_time
       break if Product.unnamed.empty?
       product = Product.unnamed.sample
-      ProductFinder.new(product, logging = false )
+      ProductFinder.new(product, logging = false)
       if product[:name] == 'Prodotto Inattivo'
         inactive_products += 1
       else

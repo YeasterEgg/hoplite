@@ -1,16 +1,10 @@
-google.charts.load('current', {'packages':['corechart']});
-
-$(document).on('page:load',callbackForGoogle);
-
-$(document).ready(callbackForGoogle);
-
-function callbackForGoogle(){
-  if ($('#product_details').length > 0)
-    google.charts.setOnLoadCallback(ajaxCall);
+function callbackForGoogle(validatorElement){
+  if (validatorElement.length > 0)
+    google.charts.setOnLoadCallback(ajaxCall(validatorElement));
 };
 
-function ajaxCall(){
-	var productCode = $('#product_details').data('code');
+function ajaxCall(validatorElement){
+	var productCode = validatorElement.data('code');
 	$.ajax({
           type: "GET",
           contentType: "application/json; charset=utf-8",
@@ -18,7 +12,7 @@ function ajaxCall(){
           dataType: 'json',
           data: "",
           success: function (data) {
-            drawCharts(data);
+            drawCharts(data, $('#histogram_container'), $('#pie_container'), $('#scatter_container'));
         	},
           error: function (result) {
               alert(result)
@@ -27,7 +21,7 @@ function ajaxCall(){
 };
 
 
-function drawCharts(ajaxData) {
+function drawCharts(ajaxData, histogramElement, pieElement, scatterElement) {
   var histogramData = google.visualization.arrayToDataTable(ajaxData[0]);
   var pieChartData = google.visualization.arrayToDataTable(ajaxData[1]);
   var scatterPlotData = google.visualization.arrayToDataTable(ajaxData[2]);
@@ -70,9 +64,9 @@ function drawCharts(ajaxData) {
     },
   };
 
-  var histogram = new google.visualization.ColumnChart(document.getElementById('histogram_container'));
-  var pieChart = new google.visualization.PieChart(document.getElementById('pie_container'));
-  var scatterPlot = new google.visualization.ScatterChart(document.getElementById('scatter_container'));
+  var histogram = new google.visualization.ColumnChart(histogramElement);
+  var pieChart = new google.visualization.PieChart(pieElement);
+  var scatterPlot = new google.visualization.ScatterChart(scatterElement);
 
   histogram.draw(histogramData, histogramOptions);
   pieChart.draw(pieChartData, pieChartOptions);

@@ -1,7 +1,16 @@
-<div style='text-align: center;'>
-  <h1>Logs</h1>
-  <%= select_tag :logs, options_for_select(@logs.map{|log| [ log[0...-4], "logs/#{log}" ] }), include_blank: true, class: :selector_for_text %>
+<%= render partial: '/shared/navbar', locals: {central: "central_index", left: "upload_form", title: 'Logs', right: "link_home"} %>
+
+<div class='container'>
+
+  <div class = "dropdown_selector">
+    <%= select_tag :logs, options_for_select(@logs.map{|log| [ log[0...-4], "logs/#{log}" ] }), include_blank: true, class: :selector_for_text %>
+    <% if Rails.env.development? or params[:override] == 'ohyeah'  %>
+      <%= link_to 'Cancella', '#', id: 'delete_text' %>
+    <% end %>
+  </div>
+
+  <pre>
+    <div id='white_paper'></div>
+  </pre>
+
 </div>
-<pre>
-  <div id='white_paper'></div>
-</pre>

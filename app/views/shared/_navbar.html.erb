@@ -2,9 +2,9 @@
 
   <%= render partial: "/shared/#{left}" %>
 
-  <%= render partial: "/shared/#{central}" %>
+  <%= render partial: "/shared/#{central}", locals: {title: title} %>
 
-  <%= render partial: '/shared/search_form' %>
+  <%= render partial: "/shared/#{right}" %>
 
   <%= render partial: '/shared/buttons' %>
 

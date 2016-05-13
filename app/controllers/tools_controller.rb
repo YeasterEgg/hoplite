@@ -28,13 +28,30 @@ class ToolsController < ApplicationController
     end
   end
 
-  def random_pics
-    render json: Dir.glob(Rails.root.join('app','assets','images','rndm','*')).map{|path| path.split('/').last}.to_json
-  end
-
   def match_maker
     MatchMaker.new
-    redirect_to :root
+    redirect_to :back
+  end
+
+  def product_finder
+    ProductFinder.nightshift(10)
+    redirect_to :back
+  end
+
+  def delete_log
+    log = "#{params[:file]}.log"
+    log_path = Rails.root.join('log',log)
+    File.delete(log_path) if File.exist?(log_path)
+    render inline: "location.reload();"
+  end
+
+  def show_data
+    @sales_quantities = Ticket.all.group_by(&:quantity).sort.map{|key,value| [key, value.size] }
+    @sale_dates = []
+    @sale_prices = []
+    @total_worth = Ticket.all.pluck(:total_worth).sum
+    @total_quantity = Ticket.all.pluck(:quantity).sum
+    @average_sale = @total_worth / @total_quantity
   end
 
 end
