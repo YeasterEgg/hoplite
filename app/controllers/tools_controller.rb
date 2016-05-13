@@ -34,7 +34,7 @@ class ToolsController < ApplicationController
   end
 
   def product_finder
-    ProductFinder.nightshift(10)
+    ProductFinder.nightshift(5)
     redirect_to :back
   end
 

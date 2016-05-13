@@ -2,7 +2,7 @@
 
   <%= render partial: "/shared/#{left}" %>
 
-  <%= render partial: "/shared/#{central}", locals: {title: title} %>
+  <%= render partial: "/shared/#{central}", locals: {title: title ||= 'empty'} %>
 
   <%= render partial: "/shared/#{right}" %>
 
