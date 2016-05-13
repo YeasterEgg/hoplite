@@ -3,19 +3,19 @@ class ProductFinder
   CLASS_NAME = Product
   LOGFILE = 'product_finder.log'
 
-  def initialize(product, log = LOGFILE)
-    logger = File.new(Rails.root.join('log',log), 'a')
+  def initialize(product, log = LOGFILE, logging = true)
+    logger = File.new(Rails.root.join('log',log), 'a') if logging
     right_now = Time.now
-    logger.puts("#{right_now.strftime('%d/%m/%y')} - Somebody clicked on product #{product[:code]} @ #{right_now.strftime('%H:%M')}")
+    logger.puts("#{right_now.strftime('%d/%m/%y')} - Somebody clicked on product #{product[:code]} @ #{right_now.strftime('%H:%M')}") if logging
     params = find_out_name(product,'http://www.decathlon.it', '/Comprare/', 'Prodotto Inattivo')
     product.update_attributes(name: params[:name], website: params[:website])
     if product[:name] == 'Prodotto Inattivo'
-      logger.puts("Turns out this product is inactive, no name for him!")
+      logger.puts("Turns out this product is inactive, no name for him!") if logging
     else
-      logger.puts("Turns out that the name of this product was -#{product[:name]}- all along! Who knew!")
+      logger.puts("Turns out that the name of this product was -#{product[:name]}- all along! Who knew!") if logging
     end
-    logger.puts("----    ----    ----    ----    ----    ----    ----    ----")
-    logger.close
+    logger.puts("----    ----    ----    ----    ----    ----    ----    ----") if logging
+    logger.close if logging
   end
 
   def self.nightshift(minutes = 15, log = LOGFILE)
@@ -30,7 +30,7 @@ class ProductFinder
     while Time.now < finishing_time
       break if Product.unnamed.empty?
       product = Product.unnamed.sample
-      ProductFinder.new(product)
+      ProductFinder.new(product, logging = false )
       if product[:name] == 'Prodotto Inattivo'
         inactive_products += 1
       else
