@@ -32,4 +32,9 @@ class ToolsController < ApplicationController
     render json: Dir.glob(Rails.root.join('app','assets','images','rndm','*')).map{|path| path.split('/').last}.to_json
   end
 
+  def match_maker
+    MatchMaker.new
+    redirect_to :root
+  end
+
 end

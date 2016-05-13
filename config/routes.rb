@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'logz', to: 'tools#show_logger', as: 'logs'
   get 'logs/:file', to: 'tools#log_to_ajax', as: 'ajax_logs'
   get 'random_pics', to: 'tools#random_pics', as: 'random_pics'
+  get 'match_maker', to: 'tools#match_maker', as: 'compute_matches'
 
   ## Help routes
   get 'help', to: 'help#help', as: 'help'

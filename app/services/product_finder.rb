@@ -3,7 +3,7 @@ class ProductFinder
   CLASS_NAME = Product
   LOGFILE = 'product_finder.log'
 
-  def initialize(product)
+  def initialize(product, log = LOGFILE)
     logger = File.new(Rails.root.join('log',log), 'a')
     right_now = Time.now
     logger.puts("#{right_now.strftime('%d/%m/%y')} - Somebody clicked on product #{product[:code]} @ #{right_now.strftime('%H:%M')}")
