@@ -8,10 +8,12 @@
   <colgroup>
     <col style="width: 30%;">
     <col style="width: 10%;">
-    <col style="width: 15%;">
-    <col style="width: 15%;">
-    <col style="width: 15%;">
-    <col style="width: 15%;">
+    <col style="width: 10%;">
+    <col style="width: 10%;">
+    <col style="width: 10%;">
+    <col style="width: 10%;">
+    <col style="width: 10%;">
+    <col style="width: 10%;">
   </colgroup>
   <thead>
     <tr>
@@ -21,6 +23,8 @@
       <th>Percentuale sul totale vendite</th>
       <th>Valore vendite combinate</th>
       <th>Rapporto Vendite Reali vs Previste</th>
+      <th>Numero di scontrini specifici coppia</th>
+      <th>Coefficiente di correlazione</th>
     </tr>
   </thead>
   <tbody>
@@ -30,8 +34,10 @@
         <td><%= pair[:product] %></td>
         <td><%= pair[:sales] %></td>
         <td><%= nice_percentual(pair[:sales].to_f / @product[:total_sales]) %></td>
-        <td><%= nice_price(pair[:total_worth]) %></td>
+        <td class = 'total_worth'><%= nice_price(pair[:total_worth]) %></td>
         <td class = 'real_probable_ratio'><%= pair[:real_probable_ratio].round(2) %></td>
+        <td class = 'solo_sales'><%= nice_percentual(pair[:solo_sales]) %></td>
+        <td class = 'correlation_coefficient'><%= nice_percentual(pair[:solo_sales]) %></td>
       </tr>
     <% end %>
   </tbody>

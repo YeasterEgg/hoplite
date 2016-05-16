@@ -2,7 +2,7 @@ class ProductDecorator < ApplicationDecorator
   delegate_all
   delegate :current_page, :total_pages, :limit_value
 
-  def hashed_pairs
+  def hashed_pairs( n = 20 )
     hashed_pairs = []
     panoplies_product_1.each do |panoplie|
       product_2 = Product.find(panoplie[:product_id_2])
@@ -11,6 +11,8 @@ class ProductDecorator < ApplicationDecorator
                     sales: panoplie[:quantity],
                     total_worth: panoplie[:quantity] * (object[:price] + product_2[:price]),
                     real_probable_ratio: panoplie[:quantity].fdiv(probable_sales(product_2)),
+                    solo_ticket_ratio: panoplie[:solo_sales].fdiv(panoplie[:quantity]),
+                    correlation_coefficient: panoplie.correlation_coefficient,
                     }
     end
     panoplies_product_2.each do |panoplie|
@@ -20,9 +22,11 @@ class ProductDecorator < ApplicationDecorator
                     sales: panoplie[:quantity],
                     total_worth: panoplie[:quantity] * (object[:price] + product_2[:price]),
                     real_probable_ratio: panoplie[:quantity].fdiv(probable_sales(product_2)),
+                    solo_ticket_ratio: panoplie[:solo_sales].fdiv(panoplie[:quantity]),
+                    correlation_coefficient: panoplie.correlation_coefficient,
                     }
     end
-    hashed_pairs.sort_by{|pair| pair[:sales]}.reverse
+    hashed_pairs.sort_by{|pair| pair[:sales]}.last(n).reverse
   end
 
   def husband_product
@@ -38,20 +42,6 @@ class ProductDecorator < ApplicationDecorator
   end
 
     private
-
-    def top_pairs(pair_number = 30)
-      all_sales = []
-      object.tickets.each do |ticket|
-        ticket.sales.where.not(product_id: object[:id]).map{|sale| all_sales << sale}
-      end
-      counted_sales = Hash.new(0)
-      all_sales.uniq(&:ticket_id).map(&:product_id).each do |sale|
-        counted_sales[sale] += 1
-      end
-      counted_sales.sort_by{ |key,value| value}
-                   .last(pair_number)
-                   .reverse
-    end
 
     def best_pairs_to_chart(pairs_number = 10)
       best_pairs = hashed_pairs.first(pairs_number)

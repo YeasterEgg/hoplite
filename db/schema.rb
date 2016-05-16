@@ -25,12 +25,14 @@ ActiveRecord::Schema.define(version: 20160511144457) do
     t.integer "quantity"
     t.integer "product_id_1"
     t.integer "product_id_2"
+    t.integer "solo_sales"
   end
 
   create_table "products", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
     t.string   "website"
+    t.string   "web_pic"
     t.integer  "total_sales"
     t.decimal  "price",       precision: 6, scale: 2
     t.datetime "created_at"

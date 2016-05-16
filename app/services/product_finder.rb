@@ -2,13 +2,14 @@ class ProductFinder
 
   CLASS_NAME = Product
   LOGFILE = 'product_finder.log'
+  require 'open-uri'
 
   def initialize(product, logging = true, log = LOGFILE )
     logger = File.new(Rails.root.join('public','log',log), 'a') if logging
     right_now = Time.now
     logger.puts("#{right_now.strftime('%d/%m/%y')} - Somebody clicked on product #{product[:code]} @ #{right_now.strftime('%H:%M')}") if logging
     params = find_out_name(product,'http://www.decathlon.it', '/Comprare/', 'Prodotto Inattivo')
-    product.update_attributes(name: params[:name], website: params[:website])
+    product.update_attributes(params)
     if product[:name] == 'Prodotto Inattivo'
       logger.puts("Turns out this product is inactive, no name for him!") if logging
     else
@@ -18,7 +19,7 @@ class ProductFinder
     logger.close if logging
   end
 
-  def self.nightshift(minutes = 15, log = LOGFILE)
+  def self.nightshift(minutes = 15, log = LOGFILE, products = Product.unnamed)
     logger = File.new(Rails.root.join('public','log',log), 'a')
     logger.puts("#{Time.now.strftime('%d/%m/%y')} - STARTING ProductFinder Nightshift!")
     starting_time = Time.now
@@ -28,8 +29,8 @@ class ProductFinder
     names_found = 0
     inactive_products = 0
     while Time.now < finishing_time
-      break if Product.unnamed.empty?
-      product = Product.unnamed.sample
+      break if products.empty?
+      product = products.sample
       ProductFinder.new(product, logging = false)
       if product[:name] == 'Prodotto Inattivo'
         inactive_products += 1
@@ -42,6 +43,12 @@ class ProductFinder
     logger.close
   end
 
+  def self.set_to_0(products = Product.named)
+    products.each do |product|
+      product.update_attributes(name: nil, website: nil, web_pic: nil)
+    end
+  end
+
   private
 
     def find_out_name(product, website, website_path, placeholder_name)
@@ -50,14 +57,18 @@ class ProductFinder
       product_url = URI(website + website_path + product[:code])
       response_to_url = Net::HTTP.get_response(product_url)
       if response_to_url['location']
+        web_pic = Nokogiri::HTML(open(response_to_url['location'])).try(:css, '#productMainPicture').try(:first).try{|img| img[:src]}
+        web_pic.insert(0, website) unless web_pic.nil?
         return {
                 name: parse_product_title(response_to_url['location']),
                 website: response_to_url['location'],
+                web_pic: web_pic,
                }
       else
         return {
                 name: placeholder_name,
                 website: website,
+                web_pic: nil,
                }
       end
     end

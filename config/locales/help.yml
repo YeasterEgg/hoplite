@@ -1,4 +1,14 @@
 Autore:
-  text: "L'autore, dalla messianica modestia, è un ex umile venditore, ora umile programmatore, che può essere contattato mediante riti arcaici."
-Principi:
+  text: "In caso di problemi contattarmi a l.d.mattiazzi@gmail.com"
+Info generiche:
   text: "Questa applicazione è stata creata per analizzare e mostrare i risultati di tali analisi di prodotti. Le analisi vertono sulle vendite giorno per giorno e soprattutto sulle combinazioni di vendite contemporanee di più prodotti, stimando quanto queste accadano per caso o per qualche motivazione commerciale o d'uso."
+Obbiettivo:
+  text: "L'utilità principale di questa webapp è di raccogliere e mostrare i dati di vendite combinate di ogni prodotto, evidenziando quelle che risultano più importanti. Per farlo vengono mostrati diversi coefficienti importanti per valutare l'eventuale esistenza di una correlazione fra due prodotti. I più intuitivi sono il numero di vendite combinate e la Cifra di affari totale."
+Percentuale sul totale vendite:
+  text: "Questo valore rappresenta la percentuale delle vendite totali del primo prodotto avvenute assieme al secondo. Una percentuale molto bassa, anche a fronte di un numero alto di vendite combinate, può portare a pensare a un valore casuale più che causale."
+Rapporto Vendite Reali vs Previste:
+  text: "Viene calcolato come stima di valore atteso di vendite di ogni prodotto il numero di vendite di questo prodotto diviso il totale delle vendite totali del periodo di vendita del prodotto stesso. Il prodotto dei valori attesi di 2 prodotti è il valore atteso della vendita combinata dei due prodotti, se a sua volta viene moltiplicata per il numero totale di vendite si ottiene il numero previsto di vendite combinate (se i due prodotti sono totalmente non correlati). Il valore di questo coefficiente è il numero di vendite combinate effettive diviso quello previsto. Più è alto, più la coppia è significativa (purchè non si tratti di prodotti con meno di 10 vendite totali)."
+Precentuale di scontrini specifici coppia:
+  text: "Su tutte le vendite combinate, la parte di scontrini che contengono solo ed esclusivamente i due prodotti."
+Coefficiente di correlazione:
+  text: "Quanto l'andamento di vendita giornaliera di un prodotto segua quello dell'altro."

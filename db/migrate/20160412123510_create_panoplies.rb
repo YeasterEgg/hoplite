@@ -4,6 +4,7 @@ class CreatePanoplies < ActiveRecord::Migration
       t.integer :quantity
       t.integer :product_id_1
       t.integer :product_id_2
+      t.integer :solo_sales
     end
   end
 end

@@ -4,6 +4,7 @@ class CreateProducts < ActiveRecord::Migration
       t.string :code
       t.string :name
       t.string :website
+      t.string :web_pic
       t.integer :total_sales
       t.decimal :price, precision: 6, scale: 2
 

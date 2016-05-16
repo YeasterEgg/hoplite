@@ -6,5 +6,6 @@
     <%= @product[:code] %>
     <strong>Prezzo:</strong>
     <%= nice_price(@product[:price]) %>
+    <%= image_tag @product[:web_pic], id: 'image_hover' %>
   </p>
 </div>

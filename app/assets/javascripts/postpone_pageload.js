@@ -11,7 +11,6 @@ function postponedFunctions(){
   deleteText($('.selector_for_text'), $('#delete_text'));
   showData($('#ticket_size_title'), $('#tickets_size'), 666)
 
-
   // Product Pages (index and show) functions
   surpriseClick($('.comic'), $('.surprise'), $('.wrap'));
   addClassIfOver($('.real_probable_ratio'),5,'red_text');

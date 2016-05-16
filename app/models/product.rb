@@ -9,6 +9,7 @@ class Product < ActiveRecord::Base
   has_many :panoplies_product_2, foreign_key: "product_id_2", class_name: "Panoplie"
 
   scope :unnamed, -> { where(name: nil) }
+  scope :named, -> { where.not(name: nil) }
 
 
   def to_param
