@@ -8,19 +8,6 @@ h1 {
 
 #product_details {
   text-align: center;
-
-  #image_hover {
-    display: none;
-    position: fixed;
-  }
-
-  &:hover {
-    #image_hover {
-      display: inline-block;
-    }
-  }
-}
-
 }
 
 .product_data{
@@ -57,4 +44,27 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
   background-size: 100% 100%;
+}
+
+#image_hover {
+  display: none;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.charts{
+  width: 100%;
+  height: 400px;
+  margin-top: 50px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.chart_container {
+  width: 33%;
+  height: 400px;
 }

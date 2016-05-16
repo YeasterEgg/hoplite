@@ -1,7 +1,7 @@
 <div class = "charts">
-  <div id="pie_container", class="chart_container", style="height:400px;"></div>
-  <div id="scatter_container", class="chart_container", style="height:400px;"></div>
-  <div id="histogram_container", class="chart_container", style="height:400px;"></div>
+  <div id="pie_container", class="chart_container"></div>
+  <div id="scatter_container", class="chart_container"></div>
+  <div id="histogram_container", class="chart_container"></div>
 </div>
 
 <table class="product_data">
@@ -36,8 +36,8 @@
         <td><%= nice_percentual(pair[:sales].to_f / @product[:total_sales]) %></td>
         <td class = 'total_worth'><%= nice_price(pair[:total_worth]) %></td>
         <td class = 'real_probable_ratio'><%= pair[:real_probable_ratio].round(2) %></td>
-        <td class = 'solo_sales'><%= nice_percentual(pair[:solo_sales]) %></td>
-        <td class = 'correlation_coefficient'><%= nice_percentual(pair[:solo_sales]) %></td>
+        <td class = 'solo_sales'><%= nice_percentual(pair[:solo_ticket_ratio]) %></td>
+        <td class = 'correlation_coefficient'><%= pair[:correlation_coefficient] %></td>
       </tr>
     <% end %>
   </tbody>

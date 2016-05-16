@@ -9,3 +9,9 @@
     <%= image_tag @product[:web_pic], id: 'image_hover' %>
   </p>
 </div>
+
+<script>
+$('#product_details').on('mouseover',function(){
+  $('#image_hover').toggle()
+})
+</script>
