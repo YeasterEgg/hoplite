@@ -23,7 +23,7 @@ class ProductsController < ApplicationController
     if @product[:name].nil?
       ProductFinder.new(@product)
     end
-    @hashed_pairs = @product.hashed_pairs.first(20)
+    @panoplies = @product.panoplies.sort_by(&:importance).last(20).reverse
   end
 
   def graph_data

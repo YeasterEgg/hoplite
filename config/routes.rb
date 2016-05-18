@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'products#index'
   resources :products, param: :code, only: [:index, :show]
   get 'products/:code/graph_data', to: 'products#graph_data', defaults: { format: 'json' }, as: 'plot_graphs'
+  resources :panoplies, param: :couple, only: [:show]
 
   ## Tools routes
   get 'cthulhu', to: 'tools#destroy_all', as: 'cthulhu'

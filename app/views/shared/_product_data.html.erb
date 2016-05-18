@@ -6,38 +6,27 @@
 
 <table class="product_data">
   <colgroup>
-    <col style="width: 30%;">
-    <col style="width: 10%;">
-    <col style="width: 10%;">
-    <col style="width: 10%;">
-    <col style="width: 10%;">
-    <col style="width: 10%;">
-    <col style="width: 10%;">
-    <col style="width: 10%;">
+    <col style="width: 40%;">
+    <col style="width: 20%;">
+    <col style="width: 20%;">
+    <col style="width: 20%;">
   </colgroup>
   <thead>
     <tr>
       <th>Nome Prodotto</th>
       <th>Codice Prodotto</th>
       <th>Vendite complementari</th>
-      <th>Percentuale sul totale vendite</th>
-      <th>Valore vendite combinate</th>
-      <th>Rapporto Vendite Reali vs Previste</th>
-      <th>Numero di scontrini specifici coppia</th>
-      <th>Coefficiente di correlazione</th>
+      <th>Apri dettagli panoplie</th>
     </tr>
   </thead>
   <tbody>
-    <% @hashed_pairs.each do |pair| %>
+    <% @panoplies.each do |panoplie| %>
+    <% other_product = panoplie.other_product(@product) %>
       <tr>
-        <td><%= link_to Product.find_by_code(pair[:product]).name || 'Nessun Nome', product_path(pair[:product]) %></td>
-        <td><%= pair[:product] %></td>
-        <td><%= pair[:sales] %></td>
-        <td><%= nice_percentual(pair[:sales].to_f / @product[:total_sales]) %></td>
-        <td class = 'total_worth'><%= nice_price(pair[:total_worth]) %></td>
-        <td class = 'real_probable_ratio'><%= pair[:real_probable_ratio].round(2) %></td>
-        <td class = 'solo_sales'><%= nice_percentual(pair[:solo_ticket_ratio]) %></td>
-        <td class = 'correlation_coefficient'><%= pair[:correlation_coefficient] %></td>
+        <td><%= link_to other_product[:name] || 'Nessun Nome', product_path(other_product) %></td>
+        <td><%= other_product[:code] %></td>
+        <td><%= panoplie[:importance] %></td>
+        <td><%= link_to 'Apri panoplie', panoplie_path(panoplie.to_param) %></td>
       </tr>
     <% end %>
   </tbody>

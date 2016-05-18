@@ -60,15 +60,15 @@ class MatchMaker
           ## And if is a solo sale, it increments it too.
 
         else
-          Panoplie.create(
-                          quantity: 1,
-                          product_id_1: first,
-                          product_id_2: product,
-                          solo_sales: solo_sales,
-                          )
+          panoplie = Panoplie.create(
+                                      quantity: 1,
+                                      product_id_1: first,
+                                      product_id_2: product,
+                                      solo_sales: solo_sales,
+                                    )
           ## Else, a new one will be created.
-
         end
+        panoplie.update_attribute(:importance, panoplie.decorate.importance_calculator)
       end
       cycle_panoplie(products, ticket)
       ## Now products is one item shorter (hence the shift), the function being recursive will proceed one step

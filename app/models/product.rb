@@ -28,4 +28,10 @@ class Product < ActiveRecord::Base
     panoplies_product_1 + panoplies_product_2
   end
 
+  def husband_product
+    ## Best product for a panoplie, maybe?
+    panoplies[0] || {product: 'Nessuno', sales: ''}
+  end
+
+
 end
