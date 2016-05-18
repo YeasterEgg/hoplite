@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20160511144457) do
     t.integer "product_id_1"
     t.integer "product_id_2"
     t.integer "solo_sales"
+    t.integer "importance"
   end
 
   create_table "products", force: :cascade do |t|
