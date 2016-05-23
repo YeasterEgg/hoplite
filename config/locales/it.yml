@@ -40,5 +40,14 @@ it:
 
       multi_page: "Mostra i %{model.humanize_ita} %{from} - %{to} su %{count} in totale"
       multi_page_html: "Mostra i prodotti <b>%{from}&nbsp;-&nbsp;%{to}</b> su <b>%{count}</b> in totale"
+  panoplie:
+    total_worth: Valore Totale
+    correlation_factor: Correlazione
+    perfect_sales_factor: Vendite in coppia assoluta
+    real_probable_factor: Coefficiente Probabili / Reali
+    money_factor: Coefficiente economico
+    quantity: Quantità
+    importance: Importanza
+
 
 

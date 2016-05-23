@@ -1,0 +1,20 @@
+<table class="panoplie_data">
+  <colgroup>
+    <col style="width: 70%;">
+    <col style="width: 30%;">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Coefficiente</th>
+      <th>Valore</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @panoplie_hash.each do |key, value| %>
+      <tr class=<%="#{key}"%> >
+        <td><%= t("panoplie.#{key}") %></td>
+        <td><%= value.round(2) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
