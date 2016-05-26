@@ -23,12 +23,20 @@ class PanoplieDecorator < ApplicationDecorator
   ## Coefficient calculators - They ALL must be in the range [-1/0, 1] so that they can be easily combined.
   ########
 
-  def correlation_factor
+  def correlation_factor(product1 = product_id_1, product2 = product_id_2, minimum_set_at_0 = false)
     ## Some kind of a Pearson Correlation Coefficient
-    product_1_sales_date = product_id_1.decorate.complete_date_sales
-    product_2_sales_date = product_id_2.decorate.complete_date_sales
+    first_day = [product1.sales.first, product2.sales.first].max
+    last_day = [product1.sales.last, product2.sales.last].min
+    ## Sets the date range in common between the two products, it should be important for their sales data
+    product1_sales = product1.decorate.complete_date_sales(first_day, last_day)
+    product2_sales = product2.decorate.complete_date_sales(first_day, last_day)
     ## Created 2 arrays, each has one hash for each day when the product has been sold, with date => total_sales
-    return 1
+    corr_fact = ArrayStatistic.pearson_correlation(product1_sales.values, product2_sales.values)
+    if minimum_set_at_0
+      corr_fact >= 0 ? corr_fact : 0
+    else
+      corr_fact
+    end
   end
 
   def perfect_sales_factor

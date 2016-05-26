@@ -10,10 +10,10 @@
     </tr>
   </thead>
   <tbody>
-    <% @panoplie_hash.each do |key, value| %>
-      <tr class=<%="#{key}"%> >
-        <td><%= t("panoplie.#{key}") %></td>
-        <td><%= value.round(2) %></td>
+    <% @panoplie_attributes.each do |attribute| %>
+      <tr class=<%="#{attribute}"%> >
+        <td><%= t("panoplie.#{attribute}") %></td>
+        <td><%= panoplie[attribute].round(2) %></td>
       </tr>
     <% end %>
   </tbody>

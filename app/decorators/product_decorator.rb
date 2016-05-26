@@ -36,10 +36,14 @@ class ProductDecorator < ApplicationDecorator
     values << values_for_scatterplot
   end
 
-  def complete_date_sales(formatted_time = true)
+  def complete_date_sales(formatted_time = false, from = object.sales.first.date, to = object.sales.last.date)
     ## Fairly simple explanation, not so much the way it does it!
     ## It needs to fill the void days in the list of sales per day, so that they can be measured better.
-    grouped_sales = object.sales.group_by(&:date).to_a
+
+    grouped_sales = object.sales
+                          .date_range(from, to)
+                          .group_by(&:date)
+                          .to_a
     ## First creates a nested array with the following structure:
     ## [
     ##  [DATE1, [SALE#1, SALE#2]],

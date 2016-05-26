@@ -54,6 +54,7 @@ class Parser
       new_sale_hash = {
                         price:  price_to_decimal,
                         quantity: quantity,
+                        date: date,
                       }
 
       ## Creates an hash that will contain all the values for new Sale.

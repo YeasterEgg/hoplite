@@ -45,10 +45,11 @@ ActiveRecord::Schema.define(version: 20160511144457) do
   end
 
   create_table "sales", force: :cascade do |t|
-    t.integer "quantity"
-    t.decimal "price",      precision: 6, scale: 2
-    t.integer "ticket_id"
-    t.integer "product_id"
+    t.integer  "quantity"
+    t.decimal  "price",      precision: 6, scale: 2
+    t.integer  "ticket_id"
+    t.integer  "product_id"
+    t.datetime "date"
   end
 
   create_table "tickets", force: :cascade do |t|

@@ -5,6 +5,7 @@ class CreateSales < ActiveRecord::Migration
       t.decimal :price, precision: 6, scale: 2
       t.integer :ticket_id
       t.integer :product_id
+      t.datetime :date
     end
   end
 end
