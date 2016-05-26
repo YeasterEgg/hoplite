@@ -25,13 +25,13 @@ class PanoplieDecorator < ApplicationDecorator
 
   def correlation_factor(product1 = product_id_1, product2 = product_id_2, minimum_set_at_0 = false)
     ## Some kind of a Pearson Correlation Coefficient
-    first_day = [product1.sales.first, product2.sales.first].max
-    last_day = [product1.sales.last, product2.sales.last].min
+    first_day = [product1.sales.first[:date], product2.sales.first[:date]].max
+    last_day = [product1.sales.last[:date], product2.sales.last[:date]].min
     ## Sets the date range in common between the two products, it should be important for their sales data
     product1_sales = product1.decorate.complete_date_sales(first_day, last_day)
     product2_sales = product2.decorate.complete_date_sales(first_day, last_day)
     ## Created 2 arrays, each has one hash for each day when the product has been sold, with date => total_sales
-    corr_fact = ArrayStatistic.pearson_correlation(product1_sales.values, product2_sales.values)
+    corr_fact = ArrayStatistic.pearson_correlation(product1_sales.map(&:values).flatten, product2_sales.map(&:values).flatten)
     if minimum_set_at_0
       corr_fact >= 0 ? corr_fact : 0
     else
