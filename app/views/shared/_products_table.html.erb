@@ -37,7 +37,7 @@
           <% end %>
             <%= nice_price(product[:price]) %></td>
           <td><%= product.total_sales %></td>
-          <td><%= "#{product.husband_product[:product]} (#{product.husband_product[:sales]} volte)" %></td>
+          <td><%= "#{product.husband_product[:product]}, valore: (#{product.husband_product[:importance].round(2)})" %></td>
           <td><%= nice_price(product.total_worth) %></td>
         </tr>
       <% end %>

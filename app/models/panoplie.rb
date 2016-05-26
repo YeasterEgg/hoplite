@@ -19,4 +19,8 @@ class Panoplie < ActiveRecord::Base
     end
   end
 
+  def factors
+    [self[:correlation_factor], self[:real_probable_factor], self[:perfect_sales_factor], self[:money_factor]]
+  end
+
 end

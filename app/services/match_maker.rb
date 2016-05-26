@@ -68,10 +68,19 @@ class MatchMaker
                                     )
           ## Else, a new one will be created.
         end
+        update_values(panoplie.decorate,'correlation_factor', 'real_probable_factor', 'money_factor', 'perfect_sales_factor')
         panoplie.update_attribute(:importance, panoplie.decorate.importance_calculator)
       end
       cycle_panoplie(products, ticket)
       ## Now products is one item shorter (hence the shift), the function being recursive will proceed one step
       ## further.
     end
+
+    def update_values(decorated_panoplie = Panoplie.last.decorate, *values)
+      values.each do |value|
+        new_value = decorated_panoplie.send value
+        decorated_panoplie.update_attribute(value, new_value)
+      end
+    end
+
 end

@@ -22,11 +22,15 @@ ActiveRecord::Schema.define(version: 20160511144457) do
   end
 
   create_table "panoplies", force: :cascade do |t|
-    t.integer "quantity"
     t.integer "product_id_1"
     t.integer "product_id_2"
+    t.integer "quantity"
     t.integer "solo_sales"
-    t.integer "importance"
+    t.float   "correlation_factor"
+    t.float   "real_probable_factor"
+    t.float   "money_factor"
+    t.float   "perfect_sales_factor"
+    t.float   "importance"
   end
 
   create_table "products", force: :cascade do |t|

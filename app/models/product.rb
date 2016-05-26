@@ -30,8 +30,12 @@ class Product < ActiveRecord::Base
 
   def husband_product
     ## Best product for a panoplie, maybe?
-    panoplies[0] || {product: 'Nessuno', sales: ''}
+    if best_panoplie = panoplies.sort_by(&:importance).last
+      name = best_panoplie.other_product(self)[:name] || best_panoplie.other_product(self)[:code]
+      { product: name, importance: best_panoplie[:importance] }
+    else
+      { product: 'Nessuno', importance: 0 }
+    end
   end
-
 
 end

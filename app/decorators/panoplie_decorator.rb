@@ -5,11 +5,6 @@ class PanoplieDecorator < ApplicationDecorator
   ## Basic methods
   ########
 
-  def update_coefficients
-    importance = importance_calculator(correlation_factor, real_probable_factor)
-    object.update_attributes({importance: importance})
-  end
-
   def probable_sales(tickets = Ticket.all)
     ## The predicted number of sales between two products A and B where Pa is the expected value for a ticket
     ## to contain product A and Pb is the same for product B.
@@ -21,7 +16,7 @@ class PanoplieDecorator < ApplicationDecorator
   end
 
   def total_worth
-    (product_id_1[:price] + product_id_2[:price]) * quantity
+    (product_id_1[:price] + product_id_2[:price]) * object[:quantity]
   end
 
   ########
@@ -52,13 +47,11 @@ class PanoplieDecorator < ApplicationDecorator
   end
 
   def importance_calculator
-    factors = [correlation_factor, real_probable_factor, perfect_sales_factor, money_factor]
-    factors.sum.fdiv(factors.size)
+    object.factors.sum.fdiv(object.factors.size)
   end
 
   def importance_calculator_v2
-    factors = [correlation_factor, real_probable_factor, perfect_sales_factor, money_factor]
-    factors.inject(1){|result, factor| result *= factor}.to_f
+    object.factors.inject(1){|result, factor| result *= factor}.to_f
   end
 
 end
