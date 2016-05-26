@@ -13,7 +13,7 @@
     <% @panoplie_attributes.each do |attribute| %>
       <tr class=<%="#{attribute}"%> >
         <td><%= t("panoplie.#{attribute}") %></td>
-        <td><%= panoplie[attribute].round(2) %></td>
+        <td><%= @panoplie[attribute].round(2) %></td>
       </tr>
     <% end %>
   </tbody>
