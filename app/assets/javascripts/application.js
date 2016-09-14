@@ -12,6 +12,4 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require postpone_pageload.js
 //= require_tree .

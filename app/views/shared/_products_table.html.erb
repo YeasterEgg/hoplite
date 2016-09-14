@@ -1,55 +1,38 @@
-<div class="container">
+<table class="pure-table pure-table-horizontal">
+  <colgroup>
+    <col span="1" style="width: 20%;">
+    <col span="1" style="width: 15%;">
+    <col span="1" style="width: 15%;">
+    <col span="1" style="width: 15%;">
+    <col span="1" style="width: 20%;">
+    <col span="1" style="width: 15%;">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Nome Prodotto</th>
+      <th>Codice Prodotto</th>
+      <th>Prezzo</th>
+      <th><%= sort_link(@search, :total_sales, 'Quantità Vendute', default_order: :desc) %></th>
+      <th>Miglior Panoplie</th>
+      <th>Cifra d'affari</th>
+    </tr>
+  </thead>
 
-  <div class="flickr_pagination">
-      <%= will_paginate @collection, :container => false %>
-  </div>
-
-  <table class="product_table">
-    <colgroup>
-      <col span="1" style="width: 20%;">
-      <col span="1" style="width: 15%;">
-      <col span="1" style="width: 15%;">
-      <col span="1" style="width: 15%;">
-      <col span="1" style="width: 20%;">
-      <col span="1" style="width: 15%;">
-    </colgroup>
-    <thead>
-      <tr>
-        <th>Nome Prodotto</th>
-        <th>Codice Prodotto</th>
-        <th>Prezzo</th>
-        <th><%= sort_link(@search, :total_sales, 'Quantità Vendute', default_order: :desc) %></th>
-        <th>Miglior Panoplie</th>
-        <th>Cifra d'affari</th>
+  <tbody>
+    <% @collection.each do |product| %>
+      <tr class='product_row'>
+        <td><%= link_to product.name || 'Nessun Nome', product_path(product[:code]) %></td>
+        <td><%= product[:code] %></td>
+        <td><%= nice_price(product[:price]) %></td>
+        <td><%= product.total_sales %></td>
+        <td><%= "#{product.husband_product[:product]}, valore: (#{product.husband_product[:importance].round(2)})" %></td>
+        <td><%= nice_price(product.total_worth) %></td>
       </tr>
-    </thead>
+    <% end %>
+  </tbody>
+</table>
+<br>
 
-    <tbody>
-      <% @collection.each do |product| %>
-        <tr class='product_row'>
-          <td><%= link_to product.name || 'Nessun Nome', product_path(product[:code]) %></td>
-          <td><%= product[:code] %></td>
-          <td
-          <% if product.id == @lucky_one %>
-            class='comic'>
-          <% else %>
-            >
-          <% end %>
-            <%= nice_price(product[:price]) %></td>
-          <td><%= product.total_sales %></td>
-          <td><%= "#{product.husband_product[:product]}, valore: (#{product.husband_product[:importance].round(2)})" %></td>
-          <td><%= nice_price(product.total_worth) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <br>
-
-  <div class="flickr_pagination">
-      <div class="page_info">
-        <%= page_entries_info @collection %>
-      </div>
-      <%= will_paginate @collection, :container => false %>
-  </div>
-
+<div class="flickr_pagination">
+    <%= will_paginate @collection, :container => false %>
 </div>
